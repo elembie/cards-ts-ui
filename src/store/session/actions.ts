@@ -1,16 +1,17 @@
-import { 
-    User,
-    SessionLoggedIn, 
-    SESSION_LOGGED_IN, 
-    SessionActionTypes 
-} from './types'
+import * as types from './types'
 
-export let userLoggedIn = (user: User): SessionActionTypes => {
+export let userLoggedIn = (user: types.User): types.SessionActionTypes => {
     return {
-        type: SESSION_LOGGED_IN,
+        type: types.SESSION_LOGGED_IN,
         data: {
             user
         }
+    }
+}
+
+export let userLoggedOut = (): types.SessionActionTypes => {
+    return {
+        type: types.SESSION_LOGGED_OUT
     }
 }
 
