@@ -1,3 +1,5 @@
+import { Auth } from 'aws-amplify'
+
 export const amplifyConfig = {
     Auth: {
         region: 'ap-southeast-2',
@@ -21,5 +23,16 @@ export const amplifyConfig = {
         // Either true or false, indicating if the cookie transmission requires a secure protocol (https).
             secure: false
         },
+    },
+    API: {
+        endpoints: [
+            {
+                name: 'CardsHttpApi',
+                endpoint: 'https://tfvj0ujz67.execute-api.ap-southeast-2.amazonaws.com/dev',
+                custom_header: async () => { 
+                    return { Authorization: `Bearer ${(await Auth.currentSession()).getIdToken().getJwtToken()}` }
+                }
+            },
+        ]
     }
 }

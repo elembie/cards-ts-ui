@@ -1,17 +1,64 @@
 import * as types from './types'
+import { Dispatch } from 'redux'
+import { API } from 'aws-amplify'
+import { RootState } from '../rootReducer'
+import { AppActions, AppThunk } from '..'
+import { User } from './types'
 
-export let userLoggedIn = (user: types.User): types.SessionActionTypes => {
+export const userLoggedIn = (username: string): types.SessionActionTypes => {
+
+    let user: types.User = {
+        id: username,
+        inGame: false,
+        _isFetched: false,
+    }
+
     return {
         type: types.SESSION_LOGGED_IN,
-        data: {
-            user
+        user
+    }
+}
+
+export const userLoggedOut = (): types.SessionActionTypes => {
+    return {
+        type: types.SESSION_LOGGED_OUT
+    }
+}
+
+export const fetchingUser = (): types.SessionActionTypes => {
+    return {
+        type: types.SESSION_FETCHING_USER,
+    }
+}
+
+export const fetchedUser = (user: User): types.SessionActionTypes => {
+    return {
+        type: types.SESSION_FETCHED_USER,
+        user: {
+            ...user,
+            _isFetched: true
         }
     }
 }
 
-export let userLoggedOut = (): types.SessionActionTypes => {
+export const fetchedUserError = (error: any): types.SessionActionTypes => {
     return {
-        type: types.SESSION_LOGGED_OUT
+        type: types.SESSION_FETCHED_USER_ERROR,
+        error: {
+            error: error.message,
+            code: error.response.status,
+        }
+    }
+}
+
+export const getUser = (): AppThunk => {
+    return async (dispatch: Dispatch<AppActions>, getState: () => RootState) => {
+
+        dispatch(fetchingUser())
+
+        API.get('CardsHttpApi', '/user', { result: true })
+            .then(result => dispatch(fetchedUser(result)))
+            .catch(error => dispatch(fetchedUserError(error)))
     }
 }
 

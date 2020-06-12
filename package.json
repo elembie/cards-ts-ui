@@ -16,6 +16,7 @@
     "@types/react-redux": "^7.1.8",
     "@types/redux-logger": "^3.0.8",
     "aws-amplify": "^3.0.10",
+    "axios": "^0.19.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.0",
