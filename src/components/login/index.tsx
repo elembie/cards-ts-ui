@@ -1,14 +1,3 @@
-import * as React from 'react'
-import { Auth } from 'aws-amplify'
+import Login from './Login'
 
-export interface Props {
-    test: string,
-}
-
-const Login: React.FC<Props> = ({ test }) => {
-    return (
-        <div>
-
-        </div>
-    )
-}
+export default Login

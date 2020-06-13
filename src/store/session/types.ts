@@ -15,7 +15,7 @@ export interface SessionError {
 }
 
 export interface SessionState {
-    user?: User,
+    user: User,
     error?: SessionError,
     _isLoggedIn: boolean,
     _isFetchingUser: boolean,

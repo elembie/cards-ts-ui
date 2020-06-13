@@ -1,7 +1,11 @@
 import * as types from './types'
 
 const initialState: types.SessionState = {
-    user: undefined,
+    user: {
+        id: '',
+        inGame: false,
+        _isFetched: false,
+    },
     error: undefined,
     _isLoggedIn: false,
     _isFetchingUser: false,

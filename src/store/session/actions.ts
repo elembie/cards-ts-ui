@@ -58,7 +58,10 @@ export const getUser = (): AppThunk => {
 
         API.get('CardsHttpApi', '/user', { result: true })
             .then(result => dispatch(fetchedUser(result)))
-            .catch(error => dispatch(fetchedUserError(error)))
+            .catch(error => {
+                console.log(error)
+                dispatch(fetchedUserError(error))
+            })
     }
 }
 

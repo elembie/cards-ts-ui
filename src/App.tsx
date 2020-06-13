@@ -1,31 +1,33 @@
 import React, { useEffect } from 'react';
-import Amplify, { Auth } from 'aws-amplify'
-import { useDispatch } from 'react-redux';
-import { amplifyConfig } from './config/amplify'
+import { Hub } from 'aws-amplify'
+import { useDispatch, useSelector } from 'react-redux';
 import { userLoggedIn, getUser } from './store/session/actions'
 import { AppDispatch } from './store'
+import { RootState } from './store/rootReducer';
+import Menu from './views/Menu';
+import Login from './components/Login';
 
-Amplify.configure(amplifyConfig)
 function App() {
 
   const dispatch: AppDispatch = useDispatch()
 
   useEffect(() => {
+    Hub.listen('auth', (data) => {       
+        switch (data.payload.event) {
+          case 'signIn':
+            dispatch(userLoggedIn(data.payload.data.username))
+            dispatch(getUser())
+        }  
+    })
+  }, [dispatch])
 
-    Auth.currentAuthenticatedUser()
-      .then(u => {
-        console.log(u)
-        dispatch(userLoggedIn(u.username))
-        dispatch(getUser())
-      })
-      .catch(e => console.log(e))
-
-  })
+  const isLoggedIn = useSelector((state: RootState) => state.session._isLoggedIn)
+  const isUserFetched = useSelector((state: RootState) => state.session.user._isFetched)
 
   return (
     
     <div>
-      <button onClick={()=>Auth.federatedSignIn()}>Sign in</button>
+      {isLoggedIn && isUserFetched ? <Menu/> : <Login/>}
     </div>
   );
 }
