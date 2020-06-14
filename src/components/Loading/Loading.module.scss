@@ -1,0 +1,12 @@
+.base {
+    font-size: 20px;
+    letter-spacing: 3px;
+    float: left;
+
+    .suits {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}

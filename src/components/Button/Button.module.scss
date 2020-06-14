@@ -1,0 +1,11 @@
+.base {
+    width: 100%;
+    min-width: 200px;
+    height: 50px;
+
+    letter-spacing: 1px;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
