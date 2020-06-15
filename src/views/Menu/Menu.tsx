@@ -4,11 +4,23 @@ import { User } from '../../store/session/types'
 import { RootState } from '../../store/rootReducer'
 import styles from './Menu.module.scss'
 import Button from '../../components/Button'
-import { OptionsEnum, MenuOptions } from '../../components/types'
+import { OptionsEnum, MenuOption } from '../../components/types'
+import MenuDialogue from '../../components/MenuDialogue'
 
 export interface Props {
 
 }
+
+const MenuOptions: MenuOption[] = [
+    {
+        option: OptionsEnum.newGame,
+        text: 'new game'
+    },
+    {
+        option: OptionsEnum.joinGame,
+        text: 'join game'
+    }
+]
 
 const Menu: FunctionComponent<Props> = ({}) => {
 
@@ -23,7 +35,7 @@ const Menu: FunctionComponent<Props> = ({}) => {
             </div>
 
             <div className={styles.options}>
-                Options
+                <MenuDialogue menuOption={selectedOption} />
             </div>
             
         </div>

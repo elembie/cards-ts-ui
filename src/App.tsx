@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { userLoggedIn, getUser } from './store/session/actions'
 import { AppDispatch } from './store'
 import { RootState } from './store/rootReducer';  
-import Login from './components/Login';
+import Login from './views/Login';
 import AppContainer from './containers/AppContainer';
 
 function App() {
