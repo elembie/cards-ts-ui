@@ -35,4 +35,57 @@
         }
     }
 
+    .nplayersContainer {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-top: 12px;
+    }
+
+    .playerUp {
+        -webkit-user-select: none; /* Chrome/Safari */        
+        -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* IE10+ */
+
+        width: 0; 
+        height: 0; 
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+    
+        border-bottom: 10px solid black;
+
+        &:hover {
+            cursor: pointer;
+            text-decoration: underline;
+        }
+    }
+
+    .playerDown {
+        -webkit-user-select: none; /* Chrome/Safari */        
+        -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* IE10+ */
+        margin-left: 24px;
+
+        width: 0; 
+        height: 0; 
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        
+        border-top: 10px solid black;
+
+        &:hover {
+            cursor: pointer;
+            text-decoration: underline;
+        }
+    }
+
+    .nPlayers {
+        font-size: 36px;
+        margin: 0 12px;
+    }
+
+    .createGameButton {
+        margin-top: 36px;
+    }
+
 }

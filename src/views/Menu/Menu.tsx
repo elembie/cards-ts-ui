@@ -6,10 +6,7 @@ import styles from './Menu.module.scss'
 import Button from '../../components/Button'
 import { OptionsEnum, MenuOption } from '../../components/types'
 import MenuDialogue from '../../components/MenuDialogue'
-
-export interface Props {
-
-}
+import Spinner from '../../components/Spinner'
 
 const MenuOptions: MenuOption[] = [
     {
@@ -22,7 +19,7 @@ const MenuOptions: MenuOption[] = [
     }
 ]
 
-const Menu: FunctionComponent<Props> = ({}) => {
+const Menu: FunctionComponent = () => {
 
     const [selectedOption, setSelectedOption] = useState<OptionsEnum>(OptionsEnum.noneSelected)
 

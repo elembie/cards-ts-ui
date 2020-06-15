@@ -12,7 +12,7 @@ const initialState: types.SessionState = {
     _isFetchUserError: false,
 }
 
-export let sessionReducer = (
+export const sessionReducer = (
     state = initialState,
     action: types.SessionActionTypes 
 ): types.SessionState => {
