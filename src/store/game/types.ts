@@ -11,7 +11,7 @@ export interface CreateGame {
 
 
 export interface GameState {
-    _isCreatingGame: boolean
+    isCreatingGame: boolean
 }
 
 export const GAME_CREATING_GAME = 'GAME_CREATING_GAME'

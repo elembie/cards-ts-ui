@@ -6,7 +6,7 @@ export interface User {
     gameId?: string,
     phone?: string,
     inGame: boolean,
-    _isFetched: boolean,
+    isFetched: boolean,
 }
 
 export interface SessionError {
@@ -17,9 +17,11 @@ export interface SessionError {
 export interface SessionState {
     user: User,
     error?: SessionError,
-    _isLoggedIn: boolean,
-    _isFetchingUser: boolean,
-    _isFetchUserError: boolean,
+    isLoggedIn: boolean,
+    isNewUser: boolean,
+    isFetchingUser: boolean,
+    isFetchUserError: boolean,
+    isCreatingUser: boolean,
 }
 
 // actions
@@ -51,8 +53,21 @@ export interface SessionFetchedUserError {
     error: SessionError,
 }
 
+export const SSESION_CREATING_USER = 'SESSION_CREATING_USER'
+export interface SessionCreatingUser {
+    type: typeof SSESION_CREATING_USER,
+}
+
+export const SESSION_CREATED_USER = 'SESSION_CREATED_USER'
+export interface SessionCreatedUser {
+    type: typeof SESSION_CREATED_USER,
+    user: User,
+}
+
 export type SessionActionTypes = SessionLoggedIn 
     | SessionLoggedOut
     | SessionFetchingUser
     | SessionFetchedUser
     | SessionFetchedUserError
+    | SessionCreatingUser
+    | SessionCreatedUser

@@ -1,7 +1,7 @@
 import * as types from './types'
 
 const initialState: types.GameState = {
-    _isCreatingGame: false,
+    isCreatingGame: false,
 }
 
 export const gameReducer = (
@@ -14,7 +14,7 @@ export const gameReducer = (
         case types.GAME_CREATING_GAME:
             return {
                 ...state,
-                _isCreatingGame: true,
+                isCreatingGame: true,
             }
 
         default:

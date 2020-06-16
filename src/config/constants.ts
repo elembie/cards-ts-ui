@@ -7,6 +7,8 @@ abstract class Constants {
         { icon: '♦', color: 'red'},
     ]
 
+    public static readonly apiName = 'CardsHttpApi'
+
 }
 
 export default Constants

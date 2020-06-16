@@ -4,12 +4,14 @@ const initialState: types.SessionState = {
     user: {
         id: '',
         inGame: false,
-        _isFetched: false,
+        isFetched: false,
     },
     error: undefined,
-    _isLoggedIn: false,
-    _isFetchingUser: false,
-    _isFetchUserError: false,
+    isNewUser: false,
+    isLoggedIn: false,
+    isFetchingUser: false,
+    isFetchUserError: false,
+    isCreatingUser: false,
 }
 
 export const sessionReducer = (
@@ -23,31 +25,49 @@ export const sessionReducer = (
             return {
                 ...state,
                 user: action.user,
-                _isLoggedIn: true,
+                isLoggedIn: true,
             }
 
         case types.SESSION_FETCHING_USER:
             return {
                 ...state,
-                _isFetchingUser: true
+                isFetchingUser: true
             }
 
         case types.SESSION_FETCHED_USER_ERROR:
             return {
                 ...state,
                 error: action.error,
-                _isFetchingUser: false,
-                _isFetchUserError: true,
-                _isLoggedIn: false,
+                isFetchingUser: false,
+                isFetchUserError: true,
+                isLoggedIn: false,
+                isNewUser: action.error.code === 404
             }
 
         case types.SESSION_FETCHED_USER:
             return {
                 ...state,
                 user: action.user,
-                _isFetchingUser: false,
-                _isLoggedIn: true,
+                isFetchingUser: false,
+                isLoggedIn: true,
             }
+
+        case types.SSESION_CREATING_USER:
+            return {
+                ...state,
+                isCreatingUser: true,
+            }
+
+        case types.SESSION_CREATED_USER:
+            return {
+                ...state,
+                user: action.user,
+                isFetchUserError: false,
+                error: undefined,
+                isLoggedIn: true,
+                isFetchingUser: false,
+            }
+
 
         default:
             return state

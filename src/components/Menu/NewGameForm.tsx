@@ -1,8 +1,12 @@
-import React, { FunctionComponent, useState } from 'react'
+import React, { FunctionComponent, useState, useEffect } from 'react'
 import { GameTypes } from '../../store/game/types'
 import GameCard from '../GameCard'
 import Button from '../Button'
 import styles from './Forms.module.scss'
+import { useSelector, useDispatch } from 'react-redux'
+import { RootState } from '../../store/rootReducer'
+import { AppDispatch } from '../../store'
+import { createGame } from '../../store/game/actions'
 
 
 const NewGameForm: FunctionComponent = (props) => {
@@ -11,6 +15,10 @@ const NewGameForm: FunctionComponent = (props) => {
     const [selectedGame, setSelectedGame] = useState<GameTypes | undefined>(undefined)
     const [isPrivate, setIsPrivate] = useState<boolean>(true)
     const [tableSize, setTableSize] = useState<number>(4)
+
+    // redux
+    const dispatch: AppDispatch = useDispatch()
+    const isCreatingGame = useSelector((state: RootState) => state.game.isCreatingGame)
 
     return (
         <div className={styles.base}>
@@ -58,7 +66,16 @@ const NewGameForm: FunctionComponent = (props) => {
                     <div className={styles.playerUp} onClick={()=> {if (tableSize < 6) {setTableSize(tableSize+1)}}}></div>
                 </div>
 
-                <Button text='create game' classname={styles.createGameButton}/>                
+                <Button 
+                    isSubmitting={isCreatingGame} 
+                    text='create game' 
+                    classname={styles.createGameButton}
+                    onClick={()=> dispatch(createGame({
+                        gameType: selectedGame,
+                        isPrivate: isPrivate,
+                        tableSize: tableSize,
+                    }))}
+                />                
 
             </div>
             )}

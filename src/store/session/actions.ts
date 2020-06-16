@@ -4,13 +4,14 @@ import { API } from 'aws-amplify'
 import { RootState } from '../rootReducer'
 import { AppActions, AppThunk } from '..'
 import { User } from './types'
+import Constants from '../../config/constants'
 
 export const userLoggedIn = (username: string): types.SessionActionTypes => {
 
     let user: types.User = {
         id: username,
         inGame: false,
-        _isFetched: false,
+        isFetched: false,
     }
 
     return {
@@ -34,10 +35,7 @@ export const fetchingUser = (): types.SessionActionTypes => {
 export const fetchedUser = (user: User): types.SessionActionTypes => {
     return {
         type: types.SESSION_FETCHED_USER,
-        user: {
-            ...user,
-            _isFetched: true
-        }
+        user
     }
 }
 
@@ -56,12 +54,40 @@ export const getUser = (): AppThunk => {
 
         dispatch(fetchingUser())
 
-        API.get('CardsHttpApi', '/user', { result: true })
+        API.get(Constants.apiName, '/user', { result: true })
             .then(result => dispatch(fetchedUser(result)))
             .catch(error => {
                 console.log(error)
                 dispatch(fetchedUserError(error))
             })
+    }
+}
+
+export const creatingUser = (): types.SessionActionTypes => {
+    return {
+        type: types.SSESION_CREATING_USER
+    }
+}
+
+export const createdUser = (user: User): types.SessionActionTypes => {
+    return {
+        type: types.SESSION_CREATED_USER,
+        user
+    }
+}
+
+export const createUser = (name: string): AppThunk => {
+    return async (dispatch: Dispatch<AppActions>, getState: () => RootState) => {
+
+        dispatch(creatingUser())
+
+        API.post(Constants.apiName, '/user', {
+            body: {
+                name
+            }
+        })
+        .then(r => console.log(r))
+        .catch(e => console.log(e))
     }
 }
 

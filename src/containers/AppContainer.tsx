@@ -13,14 +13,15 @@ import Header from '../components/Header';
 
 const AppContainer: FunctionComponent = () => {
 
-    const user = useSelector((state: RootState) => state.session.user)
+    const session = useSelector((state: RootState) => state.session)
+    const { user } = session
 
     return (
         <Fragment>
 
             <Header username={user.name || ''}/>
 
-        {user._isFetched ?
+        {user. || session.isNewUser ?
 
             (
                 <Router>

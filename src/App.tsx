@@ -29,12 +29,12 @@ function App() {
 
   }, [dispatch])
 
-  const isLoggedIn = useSelector((state: RootState) => state.session._isLoggedIn)
+  const session = useSelector((state: RootState) => state.session)
 
   return (
     
     <div>
-      {isLoggedIn ? <AppContainer/> : <Login/>}
+      {session.isLoggedIn || session.isNewUser ? <AppContainer/> : <Login/>}
     </div>
   );
 }

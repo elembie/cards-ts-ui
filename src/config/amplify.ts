@@ -1,4 +1,5 @@
 import { Auth } from 'aws-amplify'
+import Constants from './constants'
 
 export const amplifyConfig = {
     Auth: {
@@ -20,7 +21,7 @@ export const amplifyConfig = {
     API: {
         endpoints: [
             {
-                name: 'CardsHttpApi',
+                name: Constants.apiName,
                 endpoint: 'https://tfvj0ujz67.execute-api.ap-southeast-2.amazonaws.com/dev',
                 custom_header: async () => { 
                     return { Authorization: `Bearer ${(await Auth.currentSession()).getIdToken().getJwtToken()}` }
