@@ -47,7 +47,10 @@ export const sessionReducer = (
         case types.SESSION_FETCHED_USER:
             return {
                 ...state,
-                user: action.user,
+                user: {
+                    ...action.user,
+                    isFetched: true
+                },
                 isFetchingUser: false,
                 isLoggedIn: true,
             }
@@ -61,11 +64,15 @@ export const sessionReducer = (
         case types.SESSION_CREATED_USER:
             return {
                 ...state,
-                user: action.user,
+                user: {
+                    ...action.user,
+                    isFetched: true,
+                },
                 isFetchUserError: false,
                 error: undefined,
                 isLoggedIn: true,
                 isFetchingUser: false,
+                isNewUser: false,
             }
 
 

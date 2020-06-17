@@ -71,3 +71,13 @@ export type SessionActionTypes = SessionLoggedIn
     | SessionFetchedUserError
     | SessionCreatingUser
     | SessionCreatedUser
+
+// utils
+export interface ApiUser {
+    email: string
+    game_id: string,
+    id: string,
+    in_game: boolean
+    name: string,
+    phone: string,
+}

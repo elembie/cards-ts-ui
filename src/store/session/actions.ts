@@ -6,6 +6,19 @@ import { AppActions, AppThunk } from '..'
 import { User } from './types'
 import Constants from '../../config/constants'
 
+
+const mapApiUser = (user: types.ApiUser): User => {
+    return {
+        id: user.id,
+        inGame: user.in_game,
+        name: user.name,
+        isFetched: true,
+        email: user.email,
+        gameId: user.game_id,
+        phone: user.phone,
+    }
+}
+
 export const userLoggedIn = (username: string): types.SessionActionTypes => {
 
     let user: types.User = {
@@ -54,8 +67,8 @@ export const getUser = (): AppThunk => {
 
         dispatch(fetchingUser())
 
-        API.get(Constants.apiName, '/user', { result: true })
-            .then(result => dispatch(fetchedUser(result)))
+        API.get(Constants.apiName, '/user', {})
+            .then(u => dispatch(fetchedUser(mapApiUser(u))))
             .catch(error => {
                 console.log(error)
                 dispatch(fetchedUserError(error))
@@ -86,7 +99,7 @@ export const createUser = (name: string): AppThunk => {
                 name
             }
         })
-        .then(r => console.log(r))
+        .then(r => dispatch(createdUser(r)))
         .catch(e => console.log(e))
     }
 }

@@ -7,6 +7,7 @@ import Modal from '../../components/Modal'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../store/rootReducer'
 import NewUserModal from '../../components/Menu/NewUserModal'
+import { Redirect } from 'react-router-dom'
 
 const MenuOptions: MenuOption[] = [
     {
@@ -22,27 +23,35 @@ const MenuOptions: MenuOption[] = [
 const Menu: FunctionComponent = () => {
 
     const [selectedOption, setSelectedOption] = useState<OptionsEnum>(OptionsEnum.noneSelected)
-    const isNewUser = useSelector((state: RootState) => state.session.isNewUser)
+    const { isNewUser, user: { inGame, gameId }} = useSelector((state: RootState) => state.session)
 
-    return (
-        <div className={styles.base}>
+    if (inGame && gameId) {
 
-            <div className={styles.buttons}>
-                {MenuOptions.map(o => 
-                    <Button classname={styles.button} key={o.option} text={o.text} onClick={()=>setSelectedOption(o.option)} />
-                )}
-            </div>
-
-            <div className={styles.options}>
-                <MenuDialogue menuOption={selectedOption} />
-            </div>
-            
-            <NewUserModal isNewUser={isNewUser} />
-
-        </div>
-
+        return <Redirect to={`/game/${gameId}`} />
         
-    )
+    } else {
+
+        return (
+            <div className={styles.base}>
+    
+                <div className={styles.buttons}>
+                    {MenuOptions.map(o => 
+                        <Button classname={styles.button} key={o.option} text={o.text} onClick={()=>setSelectedOption(o.option)} />
+                    )}
+                </div>
+    
+                <div className={styles.options}>
+                    <MenuDialogue menuOption={selectedOption} />
+                </div>
+                
+                <NewUserModal isNewUser={isNewUser} />
+    
+            </div>
+        )
+
+    }
+
+    
 }
 
 export default Menu

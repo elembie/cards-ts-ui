@@ -21,7 +21,7 @@ const AppContainer: FunctionComponent = () => {
 
             <Header username={user.name || ''}/>
 
-        {user. || session.isNewUser ?
+        {user.isFetched || session.isNewUser ?
 
             (
                 <Router>
