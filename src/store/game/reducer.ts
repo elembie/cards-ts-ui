@@ -2,6 +2,7 @@ import * as types from './types'
 
 const initialState: types.GameState = {
     isCreatingGame: false,
+    isJoiningGame: false,
     isConnectingSocket: false,
 }
 
@@ -22,6 +23,21 @@ export const gameReducer = (
             return {
                 ...state,
                 isCreatingGame: false,
+                game: {
+                    meta: action.game,
+                },
+            }
+
+        case types.GAME_JOINING_GAME:
+            return {
+                ...state,
+                isJoiningGame: true,
+            }
+
+        case types.GAME_JOINED_GAME:
+            return {
+                ...state,
+                isJoiningGame: false,
                 game: {
                     meta: action.game,
                 },

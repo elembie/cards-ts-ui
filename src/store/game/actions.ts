@@ -4,6 +4,7 @@ import { API, Auth } from 'aws-amplify'
 import { RootState } from '../rootReducer'
 import { AppActions, AppThunk } from '..'
 import Constants from '../../config/constants'
+import { getUser, fetchedUser, mapApiUser } from '../session/actions'
 
 const mapGameMeta = (game: types.ApiGameMeta): types.GameMeta => {
     return {
@@ -50,6 +51,40 @@ export const createGame = (game: types.CreateGame): AppThunk => {
     }
 }
 
+export const joiningGame = (): types.GameActionTypes => {
+    return {
+        type: types.GAME_JOINING_GAME
+    }
+}
+
+export const joinedGame = (game: types.GameMeta): types.GameActionTypes => {
+    return {
+        type: types.GAME_JOINED_GAME,
+        game,
+    }
+}
+
+export const joinGame = (gameId: string): AppThunk => {
+    return async (dispatch: Dispatch<AppActions>, getState: () => RootState) => {
+
+        dispatch(joiningGame())
+
+        API.post(Constants.apiName, `/games/${gameId}/players`, {
+            headers: {},
+            result: true,
+        })
+        .then(g => {
+            dispatch(joinedGame(mapGameMeta(g)))
+            // rely on user to determine if we're in a game or not
+            API.get(Constants.apiName, '/user', {result: true})
+            .then(u => dispatch(fetchedUser(mapApiUser(u))))
+        })
+        .catch(e => console.log(e))
+
+        
+    }
+}
+
 export const connectingSocket = (): types.GameActionTypes => {
     return {
         type: types.GAME_SOCKET_CONNECTING,
@@ -78,5 +113,12 @@ export const connectSocket = (): AppThunk => {
             console.log(e)
         }
 
+    }
+}
+
+export const disconnectSocket = (gameId: string): AppThunk => {
+    return async (dispatch: Dispatch<AppActions>, getState: () => RootState) => {
+        const socket = getState().game.socket
+        socket?.close(1000, gameId)
     }
 }

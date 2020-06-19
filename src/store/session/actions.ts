@@ -7,7 +7,7 @@ import { User } from './types'
 import Constants from '../../config/constants'
 
 
-const mapApiUser = (user: types.ApiUser): User => {
+export const mapApiUser = (user: types.ApiUser): User => {
     return {
         id: user.id,
         inGame: user.in_game,

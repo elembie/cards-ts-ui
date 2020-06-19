@@ -1,4 +1,5 @@
 import * as types from './types'
+import { GAME_JOINED_GAME } from '../game/types'
 
 const initialState: types.SessionState = {
     user: {
@@ -74,8 +75,7 @@ export const sessionReducer = (
                 isFetchingUser: false,
                 isNewUser: false,
             }
-
-
+            
         default:
             return state
     }
