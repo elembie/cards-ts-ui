@@ -98,6 +98,38 @@ export const connectedSocket = (socket: WebSocket): types.GameActionTypes => {
     }
 }
 
+export const leavingGame = (): types.GameActionTypes => {
+    return {
+        type: types.GAME_LEAVING_GAME,
+    }
+}
+
+export const leftGame = (): types.GameActionTypes => {
+    return {
+        type: types.GAME_LEFT_GAME,
+    }
+}
+
+export const leaveGame = (gameId: string): AppThunk=> {
+    return async (dispatch: Dispatch<AppActions>, getState: () => RootState) => {
+
+        dispatch(leavingGame())
+
+        API.del(Constants.apiName, `/games/${gameId}/players`, {
+            result: true,
+        })
+        .then(r => {
+            console.log('DELETE:', r)
+            API.get(Constants.apiName, '/user', {result: true})
+            .then(u => {
+                dispatch(fetchedUser(mapApiUser(u)))
+                dispatch(leftGame())
+            })
+        })
+        .catch(e => console.log(e))
+    }
+}
+
 export const connectSocket = (): AppThunk => {
     return async (dispatch: Dispatch<AppActions>, getState: () => RootState) => {
         

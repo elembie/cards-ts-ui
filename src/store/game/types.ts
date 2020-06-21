@@ -38,6 +38,8 @@ export interface Game {
 export interface GameState {
     isCreatingGame: boolean,
     isJoiningGame: boolean,
+    isLeavingGame: boolean,
+    hasLeftGame: boolean,
     isConnectingSocket: boolean,
     socket?: WebSocket,
     game?: Game,
@@ -65,6 +67,16 @@ export interface JoinedGame {
     game: GameMeta,
 }
 
+export const GAME_LEAVING_GAME = 'GAME_LEAVING_GAME'
+export interface LeavingGame {
+    type: typeof GAME_LEAVING_GAME,
+}
+
+export const GAME_LEFT_GAME = 'GAME_LEFT_GAME'
+export interface LeftGame {
+    type: typeof GAME_LEFT_GAME,
+}
+
 export const GAME_SOCKET_CONNECTING = 'GAME_SOCKET_CONNECTING'
 export interface ConnectingSocket {
     type: typeof GAME_SOCKET_CONNECTING,
@@ -80,5 +92,7 @@ export type GameActionTypes = CreatingGame
     | CreatedGame
     | JoiningGame
     | JoinedGame
+    | LeavingGame
+    | LeftGame
     | ConnectingSocket
     | ConnectedSocket

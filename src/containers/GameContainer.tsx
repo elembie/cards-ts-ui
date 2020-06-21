@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState, useEffect } from 'react'
+import React, { FunctionComponent, useEffect } from 'react'
 import { useParams, Redirect } from 'react-router-dom'
 import { AppDispatch } from '../store'
 import { useDispatch, useSelector } from 'react-redux'
@@ -14,30 +14,34 @@ const GameContainer: FunctionComponent = () => {
     const { gameId } = useParams<RouteParams>()
     const dispatch = useDispatch<AppDispatch>()
     const user = useSelector((state: RootState) => state.session.user)
-    const { isJoiningGame } = useSelector((state: RootState) => state.game)
+    const { hasLeftGame, isLeavingGame } = useSelector((state: RootState) => state.game)
 
     useEffect(() => {
 
-        if (isJoiningGame) {
-            dispatch(joinGame(gameId))
+        if (!(hasLeftGame || isLeavingGame)) {
+            if (user.inGame) {
+                dispatch(connectSocket())
+            } else {
+                dispatch(joinGame(gameId))
+            }
         }
-
-        dispatch(connectSocket())
+        
         return () => {
             dispatch(disconnectSocket(gameId))
         }
         
-    }, [dispatch, gameId, isJoiningGame])
+    }, [dispatch, gameId, hasLeftGame, isLeavingGame, user.inGame])
 
-    if (!isJoiningGame && (!user.inGame || !(user.gameId && user.gameId === gameId ))) {
-        return <Redirect to='/'/>
-    } else {
-        return (
-            <div>
-                Game {gameId}
-            </div>
-        )
+    if (hasLeftGame) {
+        return <Redirect to='/' />
     }
+
+    return (
+        <div>
+            Game {gameId}
+        </div>
+    )
+
     
     
 }

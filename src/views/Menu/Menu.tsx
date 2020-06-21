@@ -3,7 +3,6 @@ import styles from './Menu.module.scss'
 import Button from '../../components/Button'
 import { OptionsEnum, MenuOption } from '../../components/types'
 import MenuDialogue from '../../components/Menu'
-import Modal from '../../components/Modal'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../store/rootReducer'
 import NewUserModal from '../../components/Menu/NewUserModal'
@@ -24,8 +23,16 @@ const Menu: FunctionComponent = () => {
 
     const [selectedOption, setSelectedOption] = useState<OptionsEnum>(OptionsEnum.noneSelected)
     const { isNewUser, user: { inGame, gameId }} = useSelector((state: RootState) => state.session)
+    const { hasLeftGame, isLeavingGame } = useSelector((state: RootState) => state.game)
 
-    if (inGame && gameId) {
+    console.log('Has left game', hasLeftGame)
+    console.log('Is leaving game', isLeavingGame)
+    console.log('Is in game', inGame)
+    console.log('Game ID', gameId)
+
+    if (!(hasLeftGame || isLeavingGame) && inGame && gameId !== undefined) {
+
+        console.log('Redirecting back to game')
 
         return <Redirect to={`/game/${gameId}`} />
         
