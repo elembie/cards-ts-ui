@@ -2,6 +2,7 @@ import React, { FunctionComponent } from 'react'
 import { OptionsEnum } from '../types'
 import styles from './MenuDialogue.module.scss'
 import NewGameForm from './NewGameForm'
+import JoinGameForm from './JoinGameForm'
 
 export interface Props {
     menuOption: OptionsEnum
@@ -20,7 +21,7 @@ const MenuDialogue: FunctionComponent<Props> = (props) => {
             break
 
         case OptionsEnum.joinGame:
-            component = (<div>Join game</div>)
+            component = (<JoinGameForm />)
             break
 
         default:

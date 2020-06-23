@@ -74,10 +74,12 @@ export const joinGame = (gameId: string): AppThunk => {
             result: true,
         })
         .then(g => {
-            dispatch(joinedGame(mapGameMeta(g)))
             // rely on user to determine if we're in a game or not
             API.get(Constants.apiName, '/user', {result: true})
-            .then(u => dispatch(fetchedUser(mapApiUser(u))))
+            .then(u => {
+                dispatch(fetchedUser(mapApiUser(u)))
+                dispatch(joinedGame(mapGameMeta(g)))
+            })
         })
         .catch(e => console.log(e))
 
@@ -139,6 +141,7 @@ export const connectSocket = (): AppThunk => {
 
             const token = (await Auth.currentSession()).getIdToken().getJwtToken()
             const socket = new WebSocket(`wss://jepc6bx2m7.execute-api.ap-southeast-2.amazonaws.com/dev?token=${token}`)
+            socket.onmessage = (e) => console.log(e) 
             dispatch(connectedSocket(socket))
 
         } catch (e) {

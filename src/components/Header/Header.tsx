@@ -5,6 +5,7 @@ import { AppDispatch } from '../../store'
 import { useDispatch, useSelector } from 'react-redux'
 import { leaveGame } from '../../store/game/actions'
 import { RootState } from '../../store/rootReducer'
+import Button from '../Button'
 
 export interface Props {
     username: string,
@@ -14,6 +15,7 @@ const Header: FunctionComponent<Props> = (props) => {
 
     const { username } = props
     const { gameId, inGame } = useSelector((state: RootState) => state.session.user)
+    const { isLeavingGame } = useSelector((state: RootState) => state.game)
     const dispatch = useDispatch<AppDispatch>()
 
     return (
@@ -21,7 +23,9 @@ const Header: FunctionComponent<Props> = (props) => {
             <div>{username}</div>
             <div style={{flexGrow: 2}}/>
             <div className={styles.signout}>
-                <button 
+                <Button 
+                    classname={styles.button}
+                    isSubmitting={isLeavingGame}
                     onClick={()=>{
                         if (inGame) {
                             dispatch(leaveGame(gameId || ''))
@@ -29,9 +33,8 @@ const Header: FunctionComponent<Props> = (props) => {
                             Auth.signOut()
                         }
                     }}
-                >
-                    {inGame ? 'EXIT GAME' : 'SIGN OUT'}
-                </button>
+                    text={inGame ? 'EXIT GAME' : 'SIGN OUT'}
+                />
             </div>
         </div>
     )
