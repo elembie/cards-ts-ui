@@ -1,9 +1,10 @@
-import React, { FunctionComponent, useEffect } from 'react'
+import React, { FunctionComponent, useEffect, Fragment } from 'react'
 import { useParams, Redirect } from 'react-router-dom'
 import { AppDispatch } from '../store'
 import { useDispatch, useSelector } from 'react-redux'
-import { connectSocket, disconnectSocket, joinGame } from '../store/game/actions'
+import { connectSocket, disconnectSocket, joinGame, getGame } from '../store/game/actions'
 import { RootState } from '../store/rootReducer'
+import Game from '../views/Game'
 
 interface RouteParams {
     gameId: string
@@ -11,13 +12,19 @@ interface RouteParams {
 
 const GameContainer: FunctionComponent = () => {
 
+    const user = useSelector((state: RootState) => state.session.user)
+    const { 
+        hasLeftGame, 
+        isLeavingGame, 
+        isFetchingGame,
+        game 
+    } = useSelector((state: RootState) => state.game)
     const { gameId } = useParams<RouteParams>()
     const dispatch = useDispatch<AppDispatch>()
-    const user = useSelector((state: RootState) => state.session.user)
-    const { hasLeftGame, isLeavingGame } = useSelector((state: RootState) => state.game)
+    const gameIsNull = game === undefined
 
+    // socket effect
     useEffect(() => {
-
         if (!(hasLeftGame || isLeavingGame)) {
             if (user.inGame) {
                 dispatch(connectSocket())
@@ -25,25 +32,28 @@ const GameContainer: FunctionComponent = () => {
                 dispatch(joinGame(gameId))
             }
         }
-        
         return () => {
             dispatch(disconnectSocket(gameId))
         }
-        
     }, [dispatch, gameId, hasLeftGame, isLeavingGame, user.inGame])
+
+    // get game effect
+    useEffect(() => {
+        if (gameIsNull && !isFetchingGame) {
+            dispatch(getGame())
+        }
+    }, [dispatch, gameIsNull, isFetchingGame])
 
     if (hasLeftGame) {
         return <Redirect to='/' />
     }
 
     return (
-        <div>
-            Game {gameId}
-        </div>
+        <Fragment>
+            <Game />
+        </Fragment>
     )
 
-    
-    
 }
 
 export default GameContainer

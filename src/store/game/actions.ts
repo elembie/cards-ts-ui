@@ -51,6 +51,32 @@ export const createGame = (game: types.CreateGame): AppThunk => {
     }
 }
 
+export const fetchingGame = (): types.GameActionTypes => {
+    return {
+        type: types.GAME_FETCHING_GAME,
+    }
+}
+
+export const fetchedGame = (game: types.ApiGameMeta): types.GameActionTypes => {
+    return {
+        type: types.GAME_FETCHED_GAME,
+        game: {
+            meta: mapGameMeta(game)
+        }
+    }
+}
+
+export const getGame = (): AppThunk => {
+    return async (dispatch: Dispatch<AppActions>, getState: () => RootState) => {
+
+        dispatch(fetchingGame())
+
+        API.get(Constants.apiName, '/games', {result: true})
+        .then(g => dispatch(fetchedGame(g)))
+        .catch(e => console.log(e))
+    }
+}
+
 export const joiningGame = (): types.GameActionTypes => {
     return {
         type: types.GAME_JOINING_GAME
@@ -132,6 +158,13 @@ export const leaveGame = (gameId: string): AppThunk=> {
     }
 }
 
+export const metaUpdate = (game: types.ApiGameMeta): types.GameActionTypes => {
+    return {
+        type: types.GAME_META_UPDATE,
+        game: mapGameMeta(game)
+    }
+}
+
 export const connectSocket = (): AppThunk => {
     return async (dispatch: Dispatch<AppActions>, getState: () => RootState) => {
         
@@ -141,7 +174,20 @@ export const connectSocket = (): AppThunk => {
 
             const token = (await Auth.currentSession()).getIdToken().getJwtToken()
             const socket = new WebSocket(`wss://jepc6bx2m7.execute-api.ap-southeast-2.amazonaws.com/dev?token=${token}`)
-            socket.onmessage = (e) => console.log(e) 
+
+            socket.onmessage = (e) => {
+
+                const message = JSON.parse(e.data)
+
+                console.log(message)
+
+                switch(message.type) {
+                    case 'META_UPDATE':
+                        dispatch(metaUpdate(message.data))
+                }
+
+            }
+
             dispatch(connectedSocket(socket))
 
         } catch (e) {
