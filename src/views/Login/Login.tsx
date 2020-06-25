@@ -7,7 +7,7 @@ export interface Props {
 
 }
 
-const Login: React.FC<Props> = ({}) => {
+const Login: React.FC<Props> = () => {
     return (
         <div className={styles.base}>
             <div className={styles.content}>

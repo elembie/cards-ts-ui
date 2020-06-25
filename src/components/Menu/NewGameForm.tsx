@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState, useEffect } from 'react'
+import React, { FunctionComponent, useState } from 'react'
 import { GameTypes } from '../../store/game/types'
 import GameCard from '../GameCard'
 import Button from '../Button'

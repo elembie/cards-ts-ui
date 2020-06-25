@@ -8,6 +8,19 @@ const initialState: types.GameState = {
     hasLeftGame: false,
     isConnectingSocket: false,
     players: [],
+    game: {
+        isFetched: false,
+        meta: {
+            players: [],
+            createdBy: '',
+            gameType: types.GameTypes.Shithead,
+            id: '',
+            invitedPlayers: [],
+            playersJoined: 0,
+            private: true,
+            tableSize: 0,
+        }
+    }
 }
 
 export const gameReducer = (
@@ -28,6 +41,7 @@ export const gameReducer = (
                 ...state,
                 isCreatingGame: false,
                 game: {
+                    isFetched: true,
                     meta: action.game,
                 },
             }
@@ -42,7 +56,10 @@ export const gameReducer = (
             return {
                 ...state,
                 isFetchingGame: false,
-                game: action.game
+                game: {
+                    ...action.game,
+                    isFetched: true,
+                }
             }
 
         case types.GAME_JOINING_GAME:
@@ -57,6 +74,7 @@ export const gameReducer = (
                 isJoiningGame: false,
                 hasLeftGame: false,
                 game: {
+                    isFetched: true,
                     meta: action.game,
                 },
             }
@@ -71,6 +89,10 @@ export const gameReducer = (
            return {
                ...initialState,
                hasLeftGame: true,
+               game: {
+                   isFetched: false,
+                   meta: {} as any,
+               }
            }
         
         case types.GAME_SOCKET_CONNECTING:

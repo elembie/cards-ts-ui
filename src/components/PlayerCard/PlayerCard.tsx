@@ -3,16 +3,16 @@ import { Player } from '../../store/game/types'
 import styles from './PlayerCard.module.scss'
 
 export interface Props {
-    player?: Player
+    playerId: string
 }
 
 const PlayerCard: FunctionComponent<Props> = (props) => {
 
-    const { player } = props
+    const { playerId } = props
 
     return (
         <div className={styles.base}>
-            {player === undefined
+            {playerId.length === 0
 
                 ? (
                     <div>
@@ -20,9 +20,9 @@ const PlayerCard: FunctionComponent<Props> = (props) => {
                     </div>
 
                 ) : (
-                    
+
                     <div>
-                        Player: {player.name}
+                        Player: {playerId}
                     </div>
                 )}
         </div>

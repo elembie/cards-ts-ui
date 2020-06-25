@@ -4,7 +4,7 @@ import { API, Auth } from 'aws-amplify'
 import { RootState } from '../rootReducer'
 import { AppActions, AppThunk } from '..'
 import Constants from '../../config/constants'
-import { getUser, fetchedUser, mapApiUser } from '../session/actions'
+import { fetchedUser, mapApiUser } from '../session/actions'
 
 const mapGameMeta = (game: types.ApiGameMeta): types.GameMeta => {
     return {
@@ -61,6 +61,7 @@ export const fetchedGame = (game: types.ApiGameMeta): types.GameActionTypes => {
     return {
         type: types.GAME_FETCHED_GAME,
         game: {
+            isFetched: true,
             meta: mapGameMeta(game)
         }
     }

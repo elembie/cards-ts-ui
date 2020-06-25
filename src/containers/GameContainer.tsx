@@ -21,7 +21,6 @@ const GameContainer: FunctionComponent = () => {
     } = useSelector((state: RootState) => state.game)
     const { gameId } = useParams<RouteParams>()
     const dispatch = useDispatch<AppDispatch>()
-    const gameIsNull = game === undefined
 
     // socket effect
     useEffect(() => {
@@ -39,10 +38,10 @@ const GameContainer: FunctionComponent = () => {
 
     // get game effect
     useEffect(() => {
-        if (gameIsNull && !isFetchingGame) {
+        if (!game.isFetched && !isFetchingGame) {
             dispatch(getGame())
         }
-    }, [dispatch, gameIsNull, isFetchingGame])
+    }, [dispatch, game.isFetched, isFetchingGame])
 
     if (hasLeftGame) {
         return <Redirect to='/' />

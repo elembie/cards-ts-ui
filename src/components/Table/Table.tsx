@@ -5,7 +5,7 @@ const Table: FunctionComponent = () => {
     return (
         <div className={styles.base}>
             <div className={styles.table}>
-                Table
+                
             </div>
             
         </div>

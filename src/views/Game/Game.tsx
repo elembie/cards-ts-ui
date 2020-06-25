@@ -1,9 +1,37 @@
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useEffect } from 'react'
 import styles from './Game.module.scss'
 import PlayerCard from '../../components/PlayerCard'
 import Table from '../../components/Table'
+import Constants from '../../config/constants'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../store/rootReducer'
 
 const Game: FunctionComponent = () => {
+
+    const { 
+        game: { 
+            meta: {
+                tableSize,
+                players,
+            } 
+        } 
+    } = useSelector((state: RootState) => state.game)
+
+    const { 
+        user: {
+            id
+        } 
+    } = useSelector((state: RootState) => state.session)
+    const seats = Constants.seatConfig[tableSize] 
+
+    while(players.length < tableSize) {
+        players.push('')
+    }
+
+    const pidx = players.indexOf(id)
+    const reversed = players.slice(pidx+1, players.length).concat(players.slice(0, pidx)).reverse()
+    const ordered = seats.map(s => s ? reversed.pop() : '')
+
     return (
         <div className={styles.base}>
             <div className={styles.rows}>
@@ -13,17 +41,26 @@ const Game: FunctionComponent = () => {
 
                     <div className={styles.playersTop}>
                         
-                        <div className={styles.playerContainer}>
-                            <PlayerCard />
-                        </div>
+                        {seats[2] && (
+                            <div className={styles.playerContainer}>
+                                <PlayerCard playerId={ordered[2] || ''}/>
+                            </div>
+                        )}
 
-                        <div className={styles.playerContainer}>
-                            <PlayerCard />
-                        </div>
 
-                        <div className={styles.playerContainer}>
-                            <PlayerCard />
-                        </div>
+                        {seats[3] && (
+                            <div className={styles.playerContainer}>
+                                <PlayerCard playerId={ordered[3] || ''}/>
+                            </div>
+                        )}
+
+
+                        {seats[4] && (
+                            <div className={styles.playerContainer}>
+                                <PlayerCard playerId={ordered[4] || ''}/>
+                            </div>
+                        )}
+
 
                     </div>
 
@@ -35,13 +72,17 @@ const Game: FunctionComponent = () => {
 
                     <div className={styles.side}>
                         
-                        <div className={styles.playerContainer}>
-                            <PlayerCard />
-                        </div>
+                        {seats[1] && (
+                            <div className={styles.playerContainer}>
+                                <PlayerCard playerId={ordered[1] || ''}/>
+                            </div>
+                        )}
 
-                        <div className={styles.playerContainer}>
-                            <PlayerCard />
-                        </div>
+                        {seats[0] && (
+                            <div className={styles.playerContainer}>
+                                <PlayerCard playerId={ordered[0] || ''}/>
+                            </div>
+                        )}
 
                     </div>
 
@@ -51,13 +92,19 @@ const Game: FunctionComponent = () => {
 
                     <div className={styles.side}>
 
-                        <div className={styles.playerContainer}>
-                            <PlayerCard />
-                        </div>
+                        {seats[5] && (
+                            <div className={styles.playerContainer}>
+                                <PlayerCard playerId={ordered[5] || ''}/>
+                            </div>
+                        )}
 
-                        <div className={styles.playerContainer}>
-                            <PlayerCard />
-                        </div>
+
+                        {seats[6] && (
+                            <div className={styles.playerContainer}>
+                                <PlayerCard playerId={ordered[6] || ''}/>
+                            </div>
+                        )}
+
 
                     </div>
 

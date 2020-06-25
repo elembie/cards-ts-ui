@@ -32,6 +32,7 @@ export interface GameMeta {
 }
 
 export interface Game {
+    isFetched: boolean,
     meta: GameMeta,
 }
 
@@ -49,8 +50,8 @@ export interface GameState {
     hasLeftGame: boolean,
     isConnectingSocket: boolean,
     socket?: WebSocket,
-    game?: Game,
-    players: Player[]
+    game: Game,
+    players: Player[],
 }
 
 export const GAME_CREATING_GAME = 'GAME_CREATING_GAME'
