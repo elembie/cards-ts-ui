@@ -7,6 +7,7 @@ const initialState: types.GameState = {
     isLeavingGame: false,
     hasLeftGame: false,
     isConnectingSocket: false,
+    players: [],
 }
 
 export const gameReducer = (
