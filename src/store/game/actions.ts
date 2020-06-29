@@ -46,7 +46,14 @@ export const createGame = (game: types.CreateGame): AppThunk => {
             headers: {},
             result: true,
         })
-        .then(r => dispatch(createdGame(mapGameMeta(r))))
+        .then(r => {
+            // rely on user to determine if we're in a game or not
+            API.get(Constants.apiName, '/user', {result: true})
+            .then(u => {
+                dispatch(fetchedUser(mapApiUser(u)))
+                dispatch(createdGame(mapGameMeta(r)))
+            })
+        })
         .catch(e => console.log(e))
     }
 }
@@ -61,7 +68,6 @@ export const fetchedGame = (game: types.ApiGameMeta): types.GameActionTypes => {
     return {
         type: types.GAME_FETCHED_GAME,
         game: {
-            isFetched: true,
             meta: mapGameMeta(game)
         }
     }
@@ -204,3 +210,34 @@ export const disconnectSocket = (gameId: string): AppThunk => {
         socket?.close(1000, gameId)
     }
 }
+
+export const fetchingPlayer = (playerId: string): types.GameActionTypes => {
+    return {
+        type: types.GAME_FETCHING_PLAYER,
+        playerId,
+    }
+}
+
+export const fetchedPlayer = (player: types.Player): types.GameActionTypes => {
+    return {
+        type: types.GAME_FETCHED_PLAYER,
+        player,
+    }
+}
+
+export const getPlayer = (playerId: string): AppThunk => {
+    return async (dispatch: Dispatch<AppActions>, getState: () => RootState) => {
+        
+        dispatch(fetchingPlayer(playerId))
+
+        API.get(Constants.apiName, `/user/${playerId}`, {result: true})
+        .then(p => dispatch(fetchedPlayer({
+            name: p.name,
+            id: p.id,
+            isFetched: true,
+            isFetching: false,
+        })))
+        .catch(e => console.log(e))
+    }
+}
+

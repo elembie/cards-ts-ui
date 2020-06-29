@@ -9,11 +9,9 @@ import { RootState } from '../../store/rootReducer'
 const Game: FunctionComponent = () => {
 
     const { 
-        game: { 
-            meta: {
-                tableSize,
-                players,
-            } 
+        meta: {
+            tableSize,
+            players,
         } 
     } = useSelector((state: RootState) => state.game)
 
@@ -30,7 +28,7 @@ const Game: FunctionComponent = () => {
 
     const pidx = players.indexOf(id)
     const reversed = players.slice(pidx+1, players.length).concat(players.slice(0, pidx)).reverse()
-    const ordered = seats.map(s => s ? reversed.pop() : '')
+    const ordered = seats.map(active => active ? reversed.pop() : '')
 
     return (
         <div className={styles.base}>

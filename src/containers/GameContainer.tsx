@@ -17,7 +17,8 @@ const GameContainer: FunctionComponent = () => {
         hasLeftGame, 
         isLeavingGame, 
         isFetchingGame,
-        game 
+        isFetchedGame,
+        meta 
     } = useSelector((state: RootState) => state.game)
     const { gameId } = useParams<RouteParams>()
     const dispatch = useDispatch<AppDispatch>()
@@ -38,10 +39,10 @@ const GameContainer: FunctionComponent = () => {
 
     // get game effect
     useEffect(() => {
-        if (!game.isFetched && !isFetchingGame) {
+        if (!isFetchedGame && !isFetchingGame) {
             dispatch(getGame())
         }
-    }, [dispatch, game.isFetched, isFetchingGame])
+    }, [dispatch, isFetchedGame, isFetchingGame])
 
     if (hasLeftGame) {
         return <Redirect to='/' />

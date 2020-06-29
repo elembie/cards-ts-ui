@@ -3,23 +3,21 @@ import * as types from './types'
 const initialState: types.GameState = {
     isCreatingGame: false,
     isFetchingGame: false,
+    isFetchedGame: false,
     isJoiningGame: false,
     isLeavingGame: false,
     hasLeftGame: false,
     isConnectingSocket: false,
-    players: [],
-    game: {
-        isFetched: false,
-        meta: {
-            players: [],
-            createdBy: '',
-            gameType: types.GameTypes.Shithead,
-            id: '',
-            invitedPlayers: [],
-            playersJoined: 0,
-            private: true,
-            tableSize: 0,
-        }
+    players: {},
+    meta: {
+        players: [],
+        createdBy: '',
+        gameType: types.GameTypes.Shithead,
+        id: '',
+        invitedPlayers: [],
+        playersJoined: 0,
+        private: true,
+        tableSize: 0,
     }
 }
 
@@ -39,11 +37,12 @@ export const gameReducer = (
         case types.GAME_CREATED_GAME:
             return {
                 ...state,
+                isFetchingGame: false,
+                isFetchedGame: true,
                 isCreatingGame: false,
-                game: {
-                    isFetched: true,
-                    meta: action.game,
-                },
+                hasLeftGame: false,
+                isLeavingGame: false,
+                meta: action.game,
             }
 
         case types.GAME_FETCHING_GAME:
@@ -56,10 +55,8 @@ export const gameReducer = (
             return {
                 ...state,
                 isFetchingGame: false,
-                game: {
-                    ...action.game,
-                    isFetched: true,
-                }
+                isFetchedGame: true,
+                meta: action.game.meta,
             }
 
         case types.GAME_JOINING_GAME:
@@ -73,10 +70,9 @@ export const gameReducer = (
                 ...state,
                 isJoiningGame: false,
                 hasLeftGame: false,
-                game: {
-                    isFetched: true,
-                    meta: action.game,
-                },
+                isLeavingGame: false,
+                isFetchedGame: true,
+                meta: action.game,
             }
 
         case types.GAME_LEAVING_GAME:
@@ -87,12 +83,9 @@ export const gameReducer = (
 
         case types.GAME_LEFT_GAME: 
            return {
-               ...initialState,
-               hasLeftGame: true,
-               game: {
-                   isFetched: false,
-                   meta: {} as any,
-               }
+                ...initialState,
+                hasLeftGame: true,
+                isFetchedGame: false,
            }
         
         case types.GAME_SOCKET_CONNECTING:
@@ -110,9 +103,31 @@ export const gameReducer = (
         case types.GAME_META_UPDATE:
             return {
                 ...state,
-                game: {
-                    ...state.game,
-                    meta: action.game,
+                meta: action.game
+            }
+
+        case types.GAME_FETCHING_PLAYER:
+            return {
+                ...state,
+                players: {
+                    ...state.players,
+                    [action.playerId]: {
+                        isFetching: true,
+                        isFetched: false,
+                        id: '',
+                        name: '',
+                    }
+                }
+            }
+
+        case types.GAME_FETCHED_PLAYER:
+            return {
+                ...state,
+                players: {
+                    ...state.players,
+                    [action.player.id]: {
+                        ...action.player,                        
+                    }
                 }
             }
 

@@ -31,27 +31,25 @@ export interface GameMeta {
     tableSize: number,
 }
 
-export interface Game {
-    isFetched: boolean,
-    meta: GameMeta,
-}
 
 export interface Player {
     id: string,
     name: string,
-    isActive: boolean,
+    isFetched: boolean,
+    isFetching: boolean,
 }
 
 export interface GameState {
     isCreatingGame: boolean,
     isFetchingGame: boolean,
+    isFetchedGame: boolean,
     isJoiningGame: boolean,
     isLeavingGame: boolean,
     hasLeftGame: boolean,
     isConnectingSocket: boolean,
     socket?: WebSocket,
-    game: Game,
-    players: Player[],
+    meta: GameMeta,
+    players: {[key: string]: Player},
 }
 
 export const GAME_CREATING_GAME = 'GAME_CREATING_GAME'
@@ -73,7 +71,7 @@ export interface FetchingGame {
 export const GAME_FETCHED_GAME = 'GAME_FETCHED_GAME'
 export interface FetchedGame {
     type: typeof GAME_FETCHED_GAME,
-    game: Game,
+    game: { meta: GameMeta },
 }
 
 export const GAME_JOINING_GAME = 'GAME_JOINING_GAME'
@@ -114,6 +112,18 @@ export interface MetaUpdate {
     game: GameMeta,
 }
 
+export const GAME_FETCHING_PLAYER = 'GAME_FETCHING_PLAYER'
+export interface FetchingPlayer {
+    type: typeof GAME_FETCHING_PLAYER,
+    playerId: string,
+}
+
+export const GAME_FETCHED_PLAYER = 'GAME_FETCHED_PLAYER'
+export interface FetchedPlayer {
+    type: typeof GAME_FETCHED_PLAYER,
+    player: Player,
+}
+
 export type GameActionTypes = CreatingGame
     | CreatedGame
     | FetchingGame
@@ -125,3 +135,5 @@ export type GameActionTypes = CreatingGame
     | ConnectingSocket
     | ConnectedSocket
     | MetaUpdate
+    | FetchingPlayer
+    | FetchedPlayer
