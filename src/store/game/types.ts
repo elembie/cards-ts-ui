@@ -47,9 +47,19 @@ export interface GameState {
     isLeavingGame: boolean,
     hasLeftGame: boolean,
     isConnectingSocket: boolean,
+    isSendingMessage: boolean,
+    isMessageError: boolean,
+    isSocketOpen: boolean,
     socket?: WebSocket,
     meta: GameMeta,
     players: {[key: string]: Player},
+}
+
+export interface GameMessage {
+    gameId: string,
+    type: string,
+    data: object,
+    game: GameTypes
 }
 
 export const GAME_CREATING_GAME = 'GAME_CREATING_GAME'
@@ -124,6 +134,22 @@ export interface FetchedPlayer {
     player: Player,
 }
 
+export const SOCKET_SENDING_MESSAGE = 'SOCKET_SENDING_MESSAGE'
+export interface SocketSendMessage {
+    type: typeof SOCKET_SENDING_MESSAGE,
+}
+
+export const SOCKET_SENT_MESSAGE = 'SOCKET_SENT_MESSAGE'
+export interface SocketMessageSent {
+    type: typeof SOCKET_SENT_MESSAGE,
+}
+
+export const SOCKET_MESSAGE_ERROR = 'SOCKET_MESSAGE_ERROR'
+export interface SocketMessageError {
+    type: typeof SOCKET_MESSAGE_ERROR,
+    error: string,
+}
+
 export type GameActionTypes = CreatingGame
     | CreatedGame
     | FetchingGame
@@ -137,3 +163,6 @@ export type GameActionTypes = CreatingGame
     | MetaUpdate
     | FetchingPlayer
     | FetchedPlayer
+    | SocketSendMessage
+    | SocketMessageSent
+    | SocketMessageError

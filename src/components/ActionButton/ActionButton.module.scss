@@ -1,0 +1,12 @@
+.base {
+    width: 150px;
+    height: 30px;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%)  translateY(-50%);
+    top: 50%;
+    border: grey;
+    background-color: lightgrey;
+    text-align: center;
+    cursor: pointer;
+}

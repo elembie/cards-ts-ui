@@ -182,8 +182,13 @@ export const connectSocket = (): AppThunk => {
             const token = (await Auth.currentSession()).getIdToken().getJwtToken()
             const socket = new WebSocket(`wss://jepc6bx2m7.execute-api.ap-southeast-2.amazonaws.com/dev?token=${token}`)
 
-            socket.onmessage = (e) => {
+            socket.onopen = () => {
+                dispatch(connectedSocket(socket))
+                socket.send(JSON.stringify({game: 'SHD', type: 'start_game', data: 'test', gameId: '53bcca68-221b-4a41-b9d3-af1b8a79444c'}))
+            }
 
+            socket.onmessage = (e) => {
+                console.log('Message:', e)
                 const message = JSON.parse(e.data)
 
                 console.log(message)
@@ -192,10 +197,7 @@ export const connectSocket = (): AppThunk => {
                     case 'META_UPDATE':
                         dispatch(metaUpdate(message.data))
                 }
-
             }
-
-            dispatch(connectedSocket(socket))
 
         } catch (e) {
             console.log(e)
@@ -238,6 +240,45 @@ export const getPlayer = (playerId: string): AppThunk => {
             isFetching: false,
         })))
         .catch(e => console.log(e))
+    }
+}
+
+export const sendingMessage = (): types.GameActionTypes => {
+    return {
+        type: types.SOCKET_SENDING_MESSAGE,
+    }
+}
+
+export const sentMessage = (): types.GameActionTypes => {
+    return {
+        type: types.SOCKET_SENT_MESSAGE,
+    }
+}
+
+export const messageError = (error: string): types.GameActionTypes => {
+    return {
+        type: types.SOCKET_MESSAGE_ERROR,
+        error,
+    }
+} 
+
+export const sendMessage = (message: types.GameMessage) => {
+    return async (dispatch: Dispatch<AppActions>, getState: () => RootState) => {
+
+        dispatch(sendingMessage())
+
+        const socket = getState().game.socket
+
+        if (socket === undefined || socket.readyState !== WebSocket.OPEN) {
+            console.warn('Socket is null or not open')
+            dispatch(messageError('Action failed'))
+            return
+        }
+
+        socket.send(JSON.stringify(message))
+
+        dispatch(sentMessage())
+
     }
 }
 

@@ -8,6 +8,9 @@ const initialState: types.GameState = {
     isLeavingGame: false,
     hasLeftGame: false,
     isConnectingSocket: false,
+    isSocketOpen: false,
+    isMessageError: false,
+    isSendingMessage: false,
     players: {},
     meta: {
         players: [],
@@ -98,6 +101,8 @@ export const gameReducer = (
             return {
                 ...state,
                 socket: action.socket,
+                isSocketOpen: true,
+                isConnectingSocket: false,
             }
 
         case types.GAME_META_UPDATE:

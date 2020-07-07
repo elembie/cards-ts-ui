@@ -12,7 +12,8 @@ const Game: FunctionComponent = () => {
         meta: {
             tableSize,
             players,
-        } 
+        }
+        ,socket
     } = useSelector((state: RootState) => state.game)
 
     const { 
