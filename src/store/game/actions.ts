@@ -64,11 +64,13 @@ export const fetchingGame = (): types.GameActionTypes => {
     }
 }
 
-export const fetchedGame = (game: types.ApiGameMeta): types.GameActionTypes => {
+export const fetchedGame = (response: types.ApiGame): types.GameActionTypes => {
     return {
         type: types.GAME_FETCHED_GAME,
         game: {
-            meta: mapGameMeta(game)
+            meta: mapGameMeta(response.meta),
+            state: response.state,
+            player: response.player
         }
     }
 }

@@ -1,3 +1,5 @@
+import { ApiStateTypes, ApiPlayerTypes, StateTypes, PlayerTypes } from '../../games/types'
+
 export enum GameTypes {
     Shithead = 'SHD',
     ChaseTheQueen = 'CTB'
@@ -20,6 +22,12 @@ export interface ApiGameMeta {
     table_size: number,
 }
 
+export interface ApiGame {
+    meta: ApiGameMeta,
+    state: ApiStateTypes,
+    player: ApiPlayerTypes,
+}
+
 export interface GameMeta {
     id: string,
     createdBy: string,
@@ -30,7 +38,6 @@ export interface GameMeta {
     private: boolean,
     tableSize: number,
 }
-
 
 export interface Player {
     id: string,
@@ -52,6 +59,7 @@ export interface GameState {
     isSocketOpen: boolean,
     socket?: WebSocket,
     meta: GameMeta,
+    state?: StateTypes
     players: {[key: string]: Player},
 }
 
@@ -81,7 +89,7 @@ export interface FetchingGame {
 export const GAME_FETCHED_GAME = 'GAME_FETCHED_GAME'
 export interface FetchedGame {
     type: typeof GAME_FETCHED_GAME,
-    game: { meta: GameMeta },
+    game: { meta: GameMeta, state: StateTypes, player: PlayerTypes },
 }
 
 export const GAME_JOINING_GAME = 'GAME_JOINING_GAME'
