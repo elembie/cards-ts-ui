@@ -3,7 +3,7 @@ import { ShdState, ShdPlayer, ShdCard, ApiShdState, ApiShdCard, ApiShdPlayer } f
 export interface ICard {
     id: string,
     rank: number,
-    suit: 'c' | 'd' | 'h' | 's'
+    suit: 'C' | 'D' | 'H' | 'S'
     value: number
 }
 

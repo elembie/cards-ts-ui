@@ -5,6 +5,7 @@ import Table from '../../components/Table'
 import Constants from '../../config/constants'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../store/rootReducer'
+import Hand from '../../components/Hand'
 
 const Game: FunctionComponent = () => {
 
@@ -110,7 +111,7 @@ const Game: FunctionComponent = () => {
                 </div>
 
                 <div className={styles.hand}>
-                    Hand row
+                    <Hand cards={[]}/>
                 </div>
             </div>
         </div>
