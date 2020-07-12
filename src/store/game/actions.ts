@@ -6,7 +6,7 @@ import { AppActions, AppThunk } from '..'
 import Constants from '../../config/constants'
 import { fetchedUser, mapApiUser } from '../session/actions'
 import { mapApiState, mapApiPlayer } from '../../games/mapping'
-import { ApiStateTypes, ApiPlayerTypes } from '../../games/types'
+import { ApiStateTypes, ApiPlayerTypes, IState, IPlayer } from '../../games/types'
 
 const mapGameMeta = (game: types.ApiGameMeta): types.GameMeta => {
     return {
@@ -73,8 +73,8 @@ export const fetchedGame = (response: types.ApiGame): types.GameActionTypes => {
         type: types.GAME_FETCHED_GAME,
         game: {
             meta,
-            state:  mapApiState(meta.gameType, response.state),
-            player: mapApiPlayer(meta.gameType, response.player)
+            state:  response.state ? mapApiState(meta.gameType, response.state) : {} as IState,
+            player: response.player? mapApiPlayer(meta.gameType, response.player) : {} as IPlayer
         }
     }
 }
@@ -212,13 +212,13 @@ export const connectSocket = (): AppThunk => {
                 console.log(message)
 
                 switch(message.type) {
-                    case 'META_UPDATE':
+                    case 'meta_update':
                         dispatch(metaUpdate(message.data))
                         break
-                    case 'STATE_UPDATE':
+                    case 'state_update':
                         dispatch(stateUpdate(message.data))
                         break
-                    case 'PLAYER_UPDATE':
+                    case 'player_update':
                         dispatch(playerUpdate(message.data))
                 }
             }

@@ -9,7 +9,7 @@ export interface ICard {
 
 export interface IPlayer {
     id: string,
-    hand: ICard[]
+    hand: ICard[] | number
 }
 
 export interface IState {

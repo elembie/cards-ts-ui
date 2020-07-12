@@ -13,8 +13,9 @@ export interface ApiShdCard extends ICard {
 export interface ShdPlayer extends IPlayer {
     canBurn: boolean,
     canPlay: boolean,
-    hand: ShdCard[],
-    table: ShdCard[],
+    hand: ShdCard[] | number,
+    table: ShdCard[] | number,
+    hidden: number,
     isActive: boolean,
     isDealer: true,
     isOut: boolean,
@@ -27,8 +28,9 @@ export interface ShdPlayer extends IPlayer {
 export interface ApiShdPlayer extends IPlayer {
     can_burn: boolean,
     can_play: boolean,
-    hand: ApiShdCard[],
-    table: ApiShdCard[]
+    hand: ApiShdCard[] | number,
+    table: ApiShdCard[] | number,
+    hidden: number,
     is_active: boolean,
     is_dealer: true,
     is_out: boolean,

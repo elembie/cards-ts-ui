@@ -20,6 +20,7 @@ export const mapShdApiCard = (card: ApiShdCard): ShdCard => {
 }
 
 export const mapShdApiPlayer = (player: ApiShdPlayer): ShdPlayer => {
+
     return {
         canBurn: player.can_burn,
         canPlay: player.can_play,
@@ -30,8 +31,9 @@ export const mapShdApiPlayer = (player: ApiShdPlayer): ShdPlayer => {
         isReady: player.is_ready,
         shCount: player.sh_count,
         id: player.id,
-        hand: player.hand?.map(c => mapShdApiCard(c)),
-        table: player.table?.map(c => mapShdApiCard(c)),
+        hand: typeof player.hand == 'number' ? player.hand : player.hand?.map(c => mapShdApiCard(c)),
+        table: typeof player.table === 'number' ? player.table : player.table?.map(c => mapShdApiCard(c)),
+        hidden: player.hidden,
         order: player.order
     }
 }
