@@ -10,15 +10,17 @@ import {
 
 export const mapShdApiCard = (card: ApiShdCard): ShdCard => {
     return {
-        ...card,
         isSpecial: card.is_special,
         playedBy: card.played_by,
+        id: card.id,
+        rank: card.rank,
+        suit: card.suit,
+        value: card.value,
     }
 }
 
 export const mapShdApiPlayer = (player: ApiShdPlayer): ShdPlayer => {
     return {
-        ...player,
         canBurn: player.can_burn,
         canPlay: player.can_play,
         isActive: player.is_active,
@@ -27,12 +29,20 @@ export const mapShdApiPlayer = (player: ApiShdPlayer): ShdPlayer => {
         isSh: player.is_sh,
         isReady: player.is_ready,
         shCount: player.sh_count,
+        id: player.id,
+        hand: player.hand?.map(c => mapShdApiCard(c)),
+        table: player.table?.map(c => mapShdApiCard(c)),
+        order: player.order
     }
 }
 
 export const mapShdApiState = (state: ApiShdState): ShdState => {
     return {
-        ...state,
+        dead: state.dead,
+        stack: state.stack,
+        status: state.status,
+        table: state.table,
+        players: state.players.map(p => mapShdApiPlayer(p)),
         currentValue: state.current_value,
         totalPlayers: state.total_players,
     }

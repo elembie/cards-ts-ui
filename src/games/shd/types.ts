@@ -1,19 +1,20 @@
 import { ICard, IPlayer, IState } from "../types";
 
-export interface IShdCard extends ICard {
+export interface ShdCard extends ICard {
     isSpecial: boolean,
     playedBy: string,
 }
 
-export interface IApiShdCard extends ICard {
+export interface ApiShdCard extends ICard {
     is_special: boolean,
     played_by: string,
 }
 
-export interface IShdPlayer extends IPlayer {
+export interface ShdPlayer extends IPlayer {
     canBurn: boolean,
     canPlay: boolean,
-    hand: IShdCard[],
+    hand: ShdCard[],
+    table: ShdCard[],
     isActive: boolean,
     isDealer: true,
     isOut: boolean,
@@ -23,10 +24,11 @@ export interface IShdPlayer extends IPlayer {
     shCount: number,
 }
 
-export interface IApiShdPlayer extends IPlayer {
+export interface ApiShdPlayer extends IPlayer {
     can_burn: boolean,
     can_play: boolean,
-    hand: IShdCard[],
+    hand: ApiShdCard[],
+    table: ApiShdCard[]
     is_active: boolean,
     is_dealer: true,
     is_out: boolean,
@@ -36,20 +38,20 @@ export interface IApiShdPlayer extends IPlayer {
     sh_count: number,
 }
 
-export interface IShdState extends IState {
+export interface ShdState extends IState {
     currentValue: number,
     dead: number,
-    players: IShdPlayer[]
+    players: ShdPlayer[]
     stack: number,
-    table: IShdCard[]
+    table: ShdCard[]
     totalPlayers: number
 }
 
-export interface IApiShdState extends IState {
+export interface ApiShdState extends IState {
     current_value: number,
     dead: number,
-    players: IShdPlayer[]
+    players: ApiShdPlayer[]
     stack: number,
-    table: IShdCard[]
+    table: ShdCard[]
     total_players: number
 }

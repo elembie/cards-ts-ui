@@ -1,4 +1,6 @@
 import * as types from './types'
+import { mapApiState, mapApiPlayer } from '../../games/mapping'
+import { IPlayer } from '../../games/types'
 
 const initialState: types.GameState = {
     isCreatingGame: false,
@@ -11,6 +13,7 @@ const initialState: types.GameState = {
     isSocketOpen: false,
     isMessageError: false,
     isSendingMessage: false,
+    player: {} as IPlayer,
     players: {},
     meta: {
         players: [],
@@ -60,6 +63,8 @@ export const gameReducer = (
                 isFetchingGame: false,
                 isFetchedGame: true,
                 meta: action.game.meta,
+                state: action.game.state,
+                player: action.game.player,
             }
 
         case types.GAME_JOINING_GAME:
@@ -111,12 +116,25 @@ export const gameReducer = (
                 meta: action.game
             }
 
+        case types.GAME_STATE_UPDATE:
+            return {
+                ...state,
+                state: mapApiState(state.meta.gameType, action.state)
+            }
+
+        case types.GAME_PLAYER_UPDATE:
+            return {
+                ...state,
+                player: mapApiPlayer(state.meta.gameType, action.player)
+            }
+
         case types.GAME_FETCHING_PLAYER:
             return {
                 ...state,
                 players: {
                     ...state.players,
                     [action.playerId]: {
+                        ...state.players[action.playerId],
                         isFetching: true,
                         isFetched: false,
                         id: '',
@@ -130,8 +148,9 @@ export const gameReducer = (
                 ...state,
                 players: {
                     ...state.players,
-                    [action.player.id]: {
-                        ...action.player,                        
+                    [action.opponent.id]: {
+                        ...state.players[action.opponent.id],
+                        ...action.opponent,                        
                     }
                 }
             }

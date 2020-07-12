@@ -1,4 +1,4 @@
-import { ApiStateTypes, ApiPlayerTypes, StateTypes, PlayerTypes } from '../../games/types'
+import { ApiStateTypes, ApiPlayerTypes, IState, IPlayer, PlayerTypes } from '../../games/types'
 
 export enum GameTypes {
     Shithead = 'SHD',
@@ -39,7 +39,7 @@ export interface GameMeta {
     tableSize: number,
 }
 
-export interface Player {
+export interface Opponent {
     id: string,
     name: string,
     isFetched: boolean,
@@ -59,8 +59,11 @@ export interface GameState {
     isSocketOpen: boolean,
     socket?: WebSocket,
     meta: GameMeta,
-    state?: StateTypes
-    players: {[key: string]: Player},
+    state?: IState,
+    player: PlayerTypes,
+    players: {
+        [key: string]: Opponent
+    },
 }
 
 export interface GameMessage {
@@ -89,7 +92,7 @@ export interface FetchingGame {
 export const GAME_FETCHED_GAME = 'GAME_FETCHED_GAME'
 export interface FetchedGame {
     type: typeof GAME_FETCHED_GAME,
-    game: { meta: GameMeta, state: StateTypes, player: PlayerTypes },
+    game: { meta: GameMeta, state: IState, player: PlayerTypes },
 }
 
 export const GAME_JOINING_GAME = 'GAME_JOINING_GAME'
@@ -130,6 +133,18 @@ export interface MetaUpdate {
     game: GameMeta,
 }
 
+export const GAME_STATE_UPDATE = 'GAME_STATE_UPDATE'
+export interface StateUpdate {
+    type: typeof GAME_STATE_UPDATE,
+    state: ApiStateTypes,
+}
+
+export const GAME_PLAYER_UPDATE = 'GAME_PLAYER_UPDATE'
+export interface PlayerUpdate {
+    type: typeof GAME_PLAYER_UPDATE,
+    player: ApiPlayerTypes,
+}
+
 export const GAME_FETCHING_PLAYER = 'GAME_FETCHING_PLAYER'
 export interface FetchingPlayer {
     type: typeof GAME_FETCHING_PLAYER,
@@ -139,7 +154,7 @@ export interface FetchingPlayer {
 export const GAME_FETCHED_PLAYER = 'GAME_FETCHED_PLAYER'
 export interface FetchedPlayer {
     type: typeof GAME_FETCHED_PLAYER,
-    player: Player,
+    opponent: Opponent,
 }
 
 export const SOCKET_SENDING_MESSAGE = 'SOCKET_SENDING_MESSAGE'
@@ -169,6 +184,8 @@ export type GameActionTypes = CreatingGame
     | ConnectingSocket
     | ConnectedSocket
     | MetaUpdate
+    | StateUpdate
+    | PlayerUpdate
     | FetchingPlayer
     | FetchedPlayer
     | SocketSendMessage

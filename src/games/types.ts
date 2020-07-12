@@ -1,13 +1,5 @@
 import { ShdState, ShdPlayer, ShdCard, ApiShdState, ApiShdCard, ApiShdPlayer } from './shd/types'
 
-export type StateTypes = ShdState
-export type PlayerTypes = ShdPlayer
-export type CardTypes = ShdCard
-
-export type ApiStateTypes = ApiShdState
-export type ApiPlayerTypes = ApiShdPlayer
-export type ApiCardTypes = ApiShdCard
-
 export interface ICard {
     id: string,
     rank: number,
@@ -23,6 +15,12 @@ export interface IPlayer {
 export interface IState {
     players: IPlayer[],
     status: string,
-
-    mapApi(state: ApiStateTypes): StateTypes
 }
+
+export type StateTypes = IState | ShdState
+export type PlayerTypes = IPlayer | ShdPlayer
+export type CardTypes = ICard | ShdCard
+
+export type ApiStateTypes = ApiShdState
+export type ApiPlayerTypes = ApiShdPlayer
+export type ApiCardTypes = ApiShdCard

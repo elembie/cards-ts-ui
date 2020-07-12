@@ -5,6 +5,8 @@ import { RootState } from '../rootReducer'
 import { AppActions, AppThunk } from '..'
 import Constants from '../../config/constants'
 import { fetchedUser, mapApiUser } from '../session/actions'
+import { mapApiState, mapApiPlayer } from '../../games/mapping'
+import { ApiStateTypes, ApiPlayerTypes } from '../../games/types'
 
 const mapGameMeta = (game: types.ApiGameMeta): types.GameMeta => {
     return {
@@ -65,12 +67,14 @@ export const fetchingGame = (): types.GameActionTypes => {
 }
 
 export const fetchedGame = (response: types.ApiGame): types.GameActionTypes => {
+
+    const meta = mapGameMeta(response.meta)
     return {
         type: types.GAME_FETCHED_GAME,
         game: {
-            meta: mapGameMeta(response.meta),
-            state: response.state,
-            player: response.player
+            meta,
+            state:  mapApiState(meta.gameType, response.state),
+            player: mapApiPlayer(meta.gameType, response.player)
         }
     }
 }
@@ -174,6 +178,20 @@ export const metaUpdate = (game: types.ApiGameMeta): types.GameActionTypes => {
     }
 }
 
+export const stateUpdate = (state: ApiStateTypes): types.GameActionTypes => {
+    return {
+        type: types.GAME_STATE_UPDATE,
+        state
+    }
+}
+
+export const playerUpdate = (player: ApiPlayerTypes): types.GameActionTypes => {
+    return {
+        type: types.GAME_PLAYER_UPDATE,
+        player,
+    }
+}
+
 export const connectSocket = (): AppThunk => {
     return async (dispatch: Dispatch<AppActions>, getState: () => RootState) => {
         
@@ -190,14 +208,18 @@ export const connectSocket = (): AppThunk => {
             }
 
             socket.onmessage = (e) => {
-                console.log('Message:', e)
                 const message = JSON.parse(e.data)
-
                 console.log(message)
 
                 switch(message.type) {
                     case 'META_UPDATE':
                         dispatch(metaUpdate(message.data))
+                        break
+                    case 'STATE_UPDATE':
+                        dispatch(stateUpdate(message.data))
+                        break
+                    case 'PLAYER_UPDATE':
+                        dispatch(playerUpdate(message.data))
                 }
             }
 
@@ -222,10 +244,10 @@ export const fetchingPlayer = (playerId: string): types.GameActionTypes => {
     }
 }
 
-export const fetchedPlayer = (player: types.Player): types.GameActionTypes => {
+export const fetchedPlayer = (opponent: types.Opponent): types.GameActionTypes => {
     return {
         type: types.GAME_FETCHED_PLAYER,
-        player,
+        opponent,
     }
 }
 
