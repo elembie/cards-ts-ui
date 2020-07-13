@@ -1,0 +1,9 @@
+.base {
+     &:hover {
+         transform: translateY(-30px);
+     }
+    svg {
+        width: 200px;
+        height: auto;
+    }
+}

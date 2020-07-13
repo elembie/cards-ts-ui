@@ -63,7 +63,7 @@ const NewGameForm: FunctionComponent = (props) => {
                     Number of players: 
                     <div className={styles.playerDown} onClick={()=> {if (tableSize > 2) {setTableSize(tableSize-1)}}}></div> 
                     <div className={styles.nPlayers}>{tableSize} </div>
-                    <div className={styles.playerUp} onClick={()=> {if (tableSize < 6) {setTableSize(tableSize+1)}}}></div>
+                    <div className={styles.playerUp} onClick={()=> {if (tableSize < 8) {setTableSize(tableSize+1)}}}></div>
                 </div>
 
                 <Button 

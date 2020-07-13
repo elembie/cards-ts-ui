@@ -44,6 +44,10 @@ const GameContainer: FunctionComponent = () => {
         }
     }, [dispatch, isFetchedGame, isFetchingGame])
 
+    useEffect(() => {
+        document.body.style.overflow = 'hidden'
+    })
+
     if (hasLeftGame) {
         return <Redirect to='/' />
     }
