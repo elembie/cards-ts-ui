@@ -6,6 +6,7 @@ import Constants from '../../config/constants'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../store/rootReducer'
 import Hand from '../../components/Hand'
+import PlayerTable from '../../components/PlayerTable'
 
 const Game: FunctionComponent = () => {
 
@@ -42,21 +43,24 @@ const Game: FunctionComponent = () => {
                     <div className={styles.playersTop}>
                         
                         {seats[2] && (
-                            <div className={styles.playerContainer}>
+                            <div className={styles.player}>
+                                <PlayerTable piles={[[]]} slots={3} orientation="d"/>
                                 <PlayerCard playerId={ordered[2] || ''}/>
                             </div>
                         )}
 
 
                         {seats[3] && (
-                            <div className={styles.playerContainer}>
+                            <div className={styles.player}>
+                                <PlayerTable piles={[[]]} slots={3} orientation="d"/>
                                 <PlayerCard playerId={ordered[3] || ''}/>
                             </div>
                         )}
 
 
                         {seats[4] && (
-                            <div className={styles.playerContainer}>
+                            <div className={styles.player}>
+                                <PlayerTable piles={[[]]} slots={3} orientation="d"/>
                                 <PlayerCard playerId={ordered[4] || ''}/>
                             </div>
                         )}
@@ -73,13 +77,15 @@ const Game: FunctionComponent = () => {
                     <div className={styles.side}>
                         
                         {seats[1] && (
-                            <div className={styles.playerContainer}>
+                            <div className={styles.player}>
+                                <PlayerTable piles={[[]]} slots={3} orientation="r"/>
                                 <PlayerCard playerId={ordered[1] || ''}/>
                             </div>
                         )}
 
                         {seats[0] && (
-                            <div className={styles.playerContainer}>
+                            <div className={styles.player}>
+                                <PlayerTable piles={[[]]} slots={3} orientation="r"/>
                                 <PlayerCard playerId={ordered[0] || ''}/>
                             </div>
                         )}
@@ -93,14 +99,16 @@ const Game: FunctionComponent = () => {
                     <div className={styles.side}>
 
                         {seats[5] && (
-                            <div className={styles.playerContainer}>
+                            <div className={styles.player}>
+                                <PlayerTable piles={[[]]} slots={3} orientation="l"/>
                                 <PlayerCard playerId={ordered[5] || ''}/>
                             </div>
                         )}
 
 
                         {seats[6] && (
-                            <div className={styles.playerContainer}>
+                            <div className={styles.player}>
+                                <PlayerTable piles={[[]]} slots={3} orientation="l"/>
                                 <PlayerCard playerId={ordered[6] || ''}/>
                             </div>
                         )}

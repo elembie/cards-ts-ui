@@ -1,0 +1,39 @@
+.base {
+    border: 1px solid grey;
+    height: 100%;
+    flex-grow: 0;
+    position: absolute;
+
+
+    &.u {
+
+    }
+
+    &.d {
+        border: 1px solid red;
+        left: 50%;
+        top: 80px;
+        height: 12vh;
+        width: 100%;
+        transform: translateX(-50%);
+        margin: 10% 0;
+    }
+
+    &.l {
+        border: 1px solid red;
+        top: 50%;
+        right: 210px;
+        height: 100%;
+        width: 12vh;
+        transform: translateY(-50%);
+    }
+
+    &.r {
+        border: 1px solid red;
+        top: 50%;
+        left: 210px;
+        height: 100%;
+        width: 12vh;
+        transform: translateY(-50%);
+    }
+}

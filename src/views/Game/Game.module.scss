@@ -11,7 +11,7 @@
 
     .top {
         height: 100%;
-        max-height: 125px;
+        max-height: 60px;
         display: flex;
         flex-direction: row;
     }
@@ -20,7 +20,7 @@
         width: 100%;
         display: flex;
         flex-direction: row;
-        margin: 0 2%;
+        margin: 0 7%;
     }
 
     .middle {
@@ -32,16 +32,16 @@
 
     .hand {
         height: 100%;
-        max-height: 200px;
+        max-height: 150px;
     }
 
     .side {
-        max-width: 240px;
+        max-width: 140px;
         width: 100%;
         display: flex;
         flex-direction: column;
         align-content: stretch;
-        margin: 2% 0;
+        margin: 20vh 0 7vh 0;
     }
 
     .center {
@@ -49,12 +49,34 @@
         height: 100%;
     }
 
-    .playerContainer {
+    .player {
         height: 100%;
         width: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
         align-content: center;
+        position: relative;
+    }
+
+    .test {
+        position: absolute;
+        border: 1px solid red;
+        top: 50%;
+        left: 200px;
+        height: 100%;
+        width: 100%;
+        transform: translateY(-50%);
+    }
+
+    .test2 {
+        position: absolute;
+        border: 1px solid red;
+        left: 50%;
+        top: 80px;
+        height: 100px;
+        width: 100%;
+        transform: translateX(-50%);
+        margin: 10% 0;
     }
 }
