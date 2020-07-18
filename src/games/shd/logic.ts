@@ -32,7 +32,7 @@ export const mapShdApiPlayer = (player: ApiShdPlayer): ShdPlayer => {
         shCount: player.sh_count,
         id: player.id,
         hand: typeof player.hand == 'number' ? player.hand : player.hand?.map(c => mapShdApiCard(c)),
-        table: typeof player.table === 'number' ? player.table : player.table?.map(c => mapShdApiCard(c)),
+        table: player.table.map(c => mapShdApiCard(c)),
         hidden: player.hidden,
         order: player.order
     }

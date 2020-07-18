@@ -61,9 +61,12 @@ export interface GameState {
     meta: GameMeta,
     state?: IState,
     player: PlayerTypes,
-    players: {
-        [key: string]: Opponent
+    opponents: {
+        [key: string]: Opponent,
     },
+    players: {
+        [key: string]: IPlayer,
+    }
 }
 
 export interface GameMessage {

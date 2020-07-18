@@ -1,6 +1,6 @@
 import * as types from './types'
 import { mapApiState, mapApiPlayer } from '../../games/mapping'
-import { IPlayer } from '../../games/types'
+import { IPlayer, IState, PlayerTypes } from '../../games/types'
 
 const initialState: types.GameState = {
     isCreatingGame: false,
@@ -14,6 +14,7 @@ const initialState: types.GameState = {
     isMessageError: false,
     isSendingMessage: false,
     player: {} as IPlayer,
+    opponents: {},
     players: {},
     meta: {
         players: [],
@@ -25,6 +26,13 @@ const initialState: types.GameState = {
         private: true,
         tableSize: 0,
     }
+}
+
+const mapPlayersFromState = (gameState: IState) => {
+    return gameState.players.reduce((players, player) => ({
+        ...players,
+        [player.id]: player
+    }), {} as {[key:string]: IPlayer})
 }
 
 export const gameReducer = (
@@ -65,6 +73,7 @@ export const gameReducer = (
                 meta: action.game.meta,
                 state: action.game.state,
                 player: action.game.player,
+                players: mapPlayersFromState(action.game.state)
             }
 
         case types.GAME_JOINING_GAME:
@@ -119,7 +128,8 @@ export const gameReducer = (
         case types.GAME_STATE_UPDATE:
             return {
                 ...state,
-                state: mapApiState(state.meta.gameType, action.state)
+                state: mapApiState(state.meta.gameType, action.state),
+                players: mapPlayersFromState(action.state),
             }
 
         case types.GAME_PLAYER_UPDATE:
@@ -131,10 +141,10 @@ export const gameReducer = (
         case types.GAME_FETCHING_PLAYER:
             return {
                 ...state,
-                players: {
-                    ...state.players,
+                opponents: {
+                    ...state.opponents,
                     [action.playerId]: {
-                        ...state.players[action.playerId],
+                        ...state.opponents[action.playerId],
                         isFetching: true,
                         isFetched: false,
                         id: '',
@@ -146,10 +156,10 @@ export const gameReducer = (
         case types.GAME_FETCHED_PLAYER:
             return {
                 ...state,
-                players: {
-                    ...state.players,
+                opponents: {
+                    ...state.opponents,
                     [action.opponent.id]: {
-                        ...state.players[action.opponent.id],
+                        ...state.opponents[action.opponent.id],
                         ...action.opponent,                        
                     }
                 }

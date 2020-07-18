@@ -23,7 +23,7 @@ const Hand: FunctionComponent<Props> = (props) => {
                         const offset = -i * 200 + i * 60
                         return (
                             <div style={{transform: `translateX(${offset}px)`}}>
-                                <Card value={c.value} suit={c.suit}/>
+                                <Card value={c.value} suit={c.suit} location='hand'/>
                             </div>
                         )
                     })}

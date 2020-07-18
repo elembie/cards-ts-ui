@@ -1,9 +1,23 @@
 .base {
-     &:hover {
-         transform: translateY(-30px);
-     }
-    svg {
-        width: 200px;
-        height: auto;
+    display: inline;
+    &.hand {
+        &:hover {
+            transform: translateY(-30px);
+        }
     }
+
+    &.table {
+
+        margin-left: 12px;
+
+        &:first-child {
+            margin-left: 0;
+        }
+
+        & svg {
+            width: auto;
+            height: 12vh;
+        } 
+    }
+    
 }

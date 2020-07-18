@@ -6,11 +6,12 @@ interface Props {
     suit: string,
     value: number,
     style?: object,
+    location: 'hand' | 'table' | 'played'
 }
 
 const Card: FunctionComponent<Props> = (props) => {
 
-    const { suit, value, style } = props
+    const { suit, value, style, location } = props
     const [Card, setCard] = useState<React.FunctionComponent>()
     
     useEffect(() => { 
@@ -18,7 +19,7 @@ const Card: FunctionComponent<Props> = (props) => {
     }, [suit, value])
 
     return (
-        <div className={styles.base} style={style}>
+        <div className={`${styles.base} ${styles[location]}`} style={style}>
             {Card && <Card/>}
         </div>
     )

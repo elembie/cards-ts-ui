@@ -56,8 +56,8 @@ export const fetchedUserError = (error: any): types.SessionActionTypes => {
     return {
         type: types.SESSION_FETCHED_USER_ERROR,
         error: {
-            error: error.message,
-            code: error.response.status,
+            error: error?.message,
+            code: error?.response?.status,
         }
     }
 }

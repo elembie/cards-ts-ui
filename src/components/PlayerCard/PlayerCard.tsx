@@ -13,7 +13,7 @@ const PlayerCard: FunctionComponent<Props> = (props) => {
 
     const { playerId } = props
     
-    const player = useSelector((state: RootState) => state.game.players)[playerId]
+    const player = useSelector((state: RootState) => state.game.opponents)[playerId]
     const dispatch = useDispatch<AppDispatch>()
 
     const fetchPlayer = playerId.length > 0 && !player

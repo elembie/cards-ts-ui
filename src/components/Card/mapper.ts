@@ -51,12 +51,16 @@ import { ReactComponent as CJD } from './../../static/cards/JD.svg'
 import { ReactComponent as CQD } from './../../static/cards/QD.svg'
 import { ReactComponent as CKD } from './../../static/cards/KD.svg'
 import { ReactComponent as CAD } from './../../static/cards/AD.svg'
+//import { ReactComponent as CardBack } from './../../static/cards/back.svg'
 
 const getCard = (suit: string, value: number) => {
     
     console.log(suit, value)
 
     switch(suit.toUpperCase()) {
+
+        // case 'BACK':
+        //     return CardBack
 
         case 'C':
 
