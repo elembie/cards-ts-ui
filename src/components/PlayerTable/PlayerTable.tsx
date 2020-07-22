@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../store/rootReducer';
 import { ShdPlayer } from '../../games/shd/types';
 import Card from '../Card';
+import CardPile from '../CardPile';
 
 interface Props {
     orientation: 'u' | 'd' | 'l' | 'r',
@@ -17,40 +18,22 @@ const PlayerTable: FunctionComponent<Props> = (props) => {
     const player = useSelector((state: RootState) => state.game.players[playerId || ''])
     const gameType = useSelector((state: RootState) => state.game.meta.gameType)
 
-    const [hidden, setHidden] = useState<ICard[]>()
-
-    // TODO put into game specific Player table
-    const gamePlayer = player as ShdPlayer
-    const hiddenCount = gamePlayer?.hidden || 0
-
-    useEffect(() => {
-        if(hiddenCount) {
-            setHidden(Array
-                .from(Array(hiddenCount).keys())
-                .map(i => ({
-                    id: `hidden-${i}`,
-                    rank: 0,
-                    suit: 'S',
-                    value: 0,
-                })))
-        }
-    }, [hiddenCount])
-
-    if (player === undefined) {
+    if (!player) {
         return null
     }
 
-    console.log(hidden)
+    // TODO put into game specific Player table
+    const gamePlayer = player as ShdPlayer
+    const table = gamePlayer.table.sort((a,b) => a.order - b.order) || []
+    const hidden = gamePlayer.hidden.sort((a,b) => a.order - b.order) || []
+
+    const piles = table.map((t, i) => [t, hidden[i]])
+
+    console.log(piles)
 
     return (
         <div className={`${styles.base} ${styles[orientation]}`}>
-            {gamePlayer.table.map(c => 
-                <Card 
-                    suit={c.suit} 
-                    value={c.value} 
-                    key={c.id}
-                    location='table'
-                />)}
+            {piles.map(p => <CardPile cards={p} offset={1}/>)}
         </div>
     )
 }

@@ -20,7 +20,7 @@ const Hand: FunctionComponent<Props> = (props) => {
             <div className={styles.hand}>
                 <div className={styles.cards} style={{width: `${width}px`}}>
                     { hand.map((c, i) => {
-                        const offset = -i * 200 + i * 60
+                        const offset = -i * 200 + i * 60 - 50
                         return (
                             <div style={{transform: `translateX(${offset}px)`}}>
                                 <Card value={c.value} suit={c.suit} location='hand'/>

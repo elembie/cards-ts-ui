@@ -129,7 +129,7 @@ export const gameReducer = (
             return {
                 ...state,
                 state: mapApiState(state.meta.gameType, action.state),
-                players: mapPlayersFromState(action.state),
+                players: mapPlayersFromState(mapApiState(state.meta.gameType, action.state)),
             }
 
         case types.GAME_PLAYER_UPDATE:

@@ -10,12 +10,14 @@ import {
 
 export const mapShdApiCard = (card: ApiShdCard): ShdCard => {
     return {
+        isHidden: card.is_hidden,
         isSpecial: card.is_special,
         playedBy: card.played_by,
         id: card.id,
         rank: card.rank,
         suit: card.suit,
         value: card.value,
+        order: card.order,
     }
 }
 
@@ -33,7 +35,7 @@ export const mapShdApiPlayer = (player: ApiShdPlayer): ShdPlayer => {
         id: player.id,
         hand: typeof player.hand == 'number' ? player.hand : player.hand?.map(c => mapShdApiCard(c)),
         table: player.table.map(c => mapShdApiCard(c)),
-        hidden: player.hidden,
+        hidden: player.hidden.map(c => mapShdApiCard(c)),
         order: player.order
     }
 }

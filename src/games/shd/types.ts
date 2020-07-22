@@ -2,11 +2,15 @@ import { ICard, IPlayer, IState } from "../types";
 
 export interface ShdCard extends ICard {
     isSpecial: boolean,
+    isHidden: boolean,
+    order: number,
     playedBy: string,
 }
 
 export interface ApiShdCard extends ICard {
     is_special: boolean,
+    is_hidden: boolean,
+    order: number,
     played_by: string,
 }
 
@@ -15,7 +19,7 @@ export interface ShdPlayer extends IPlayer {
     canPlay: boolean,
     hand: ShdCard[] | number,
     table: ShdCard[],
-    hidden: number,
+    hidden: ShdCard[],
     isActive: boolean,
     isDealer: true,
     isOut: boolean,
@@ -30,7 +34,7 @@ export interface ApiShdPlayer extends IPlayer {
     can_play: boolean,
     hand: ApiShdCard[] | number,
     table: ApiShdCard[],
-    hidden: number,
+    hidden: ApiShdCard[],
     is_active: boolean,
     is_dealer: true,
     is_out: boolean,
