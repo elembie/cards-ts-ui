@@ -1,9 +1,12 @@
 .base {
-    display: inline;
+    border-radius: 5%;
     &.hand {
+        -webkit-box-shadow: 6px 4px 8px -5px rgba(0,0,0,0.75);
+        -moz-box-shadow: 6px 4px 8px -5px rgba(0,0,0,0.75);
+        box-shadow: 6px 4px 8px -5px rgba(0,0,0,0.75);
         &:hover {
-            transform: translateY(-30px);
-        }
+            margin-top: -20px;
+        }  
     }
 
     &.table {

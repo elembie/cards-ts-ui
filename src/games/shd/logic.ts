@@ -51,3 +51,7 @@ export const mapShdApiState = (state: ApiShdState): ShdState => {
         totalPlayers: state.total_players,
     }
 }
+
+const shdCanSelectCard = (cardId: string) => {
+    const gameState = store.getState
+}

@@ -12,7 +12,11 @@ interface Props {
 const Hand: FunctionComponent<Props> = (props) => {
 
     const { player } = useSelector((state: RootState) => state.game)
-    const hand = typeof player.hand === 'number' || player.hand === undefined ? [] : player.hand 
+
+    const hand = typeof player.hand === 'number' || player.hand === undefined 
+        ? [] 
+        : player.hand.sort((a, b) => a.value - b.value)
+
     const width = 0.6 * 200 * hand.length
 
     return (

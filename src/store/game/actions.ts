@@ -306,3 +306,10 @@ export const sendMessage = (message: types.GameMessage) => {
     }
 }
 
+export const toggleCardSelect = (cardId: string) => {
+    return {
+        type: types.CARD_TOGGLE_SELECTED,
+        cardId,
+    }
+}
+

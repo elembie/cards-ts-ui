@@ -67,6 +67,7 @@ export interface GameState {
     players: {
         [key: string]: IPlayer,
     }
+    selectedCards: string[],
 }
 
 export interface GameMessage {
@@ -176,6 +177,12 @@ export interface SocketMessageError {
     error: string,
 }
 
+export const CARD_TOGGLE_SELECTED = 'CARD_TOGGLE_SELECTED'
+export interface ToggleCardSelect {
+    type: typeof CARD_TOGGLE_SELECTED,
+    cardId: string,
+}
+
 export type GameActionTypes = CreatingGame
     | CreatedGame
     | FetchingGame
@@ -194,3 +201,4 @@ export type GameActionTypes = CreatingGame
     | SocketSendMessage
     | SocketMessageSent
     | SocketMessageError
+    | ToggleCardSelect

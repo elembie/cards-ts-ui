@@ -25,7 +25,8 @@ const initialState: types.GameState = {
         playersJoined: 0,
         private: true,
         tableSize: 0,
-    }
+    },
+    selectedCards: [],
 }
 
 const mapPlayersFromState = (gameState: IState) => {
@@ -164,6 +165,10 @@ export const gameReducer = (
                     }
                 }
             }
+
+        case types.CARD_TOGGLE_SELECTED:
+
+            
 
         default:
             return state
