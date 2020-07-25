@@ -59,7 +59,7 @@ export interface GameState {
     isSocketOpen: boolean,
     socket?: WebSocket,
     meta: GameMeta,
-    state?: IState,
+    state: IState,
     player: PlayerTypes,
     opponents: {
         [key: string]: Opponent,
@@ -71,9 +71,12 @@ export interface GameState {
 }
 
 export interface GameMessage {
-    gameId: string,
     type: string,
-    data: object,
+    data: any,
+}
+
+export interface SocketMessage extends GameMessage {
+    gameId: string,
     game: GameTypes
 }
 
@@ -177,9 +180,26 @@ export interface SocketMessageError {
     error: string,
 }
 
-export const CARD_TOGGLE_SELECTED = 'CARD_TOGGLE_SELECTED'
-export interface ToggleCardSelect {
-    type: typeof CARD_TOGGLE_SELECTED,
+export const CARD_ADD_SELECTED = 'CARD_ADD_SELECTED'
+export interface SelectCards {
+    type: typeof CARD_ADD_SELECTED,
+    cardIds: string[],
+}
+
+export const CARD_REMOVE_SELECTED = 'CARD_REMOVE_SELECTED'
+export interface UnselectCards {
+    type: typeof CARD_REMOVE_SELECTED,
+    cardIds: string[],
+}
+
+export const CARD_CLEAR_SELECTED = 'CARD_CLEAR_SELECTED'
+export interface ClearSelectedCards {
+    type: typeof CARD_CLEAR_SELECTED,
+}
+
+export const HAND_REMOVED_CARD = 'HAND_REMOVED_CARD'
+export interface RemoveHandCard {
+    type: typeof HAND_REMOVED_CARD,
     cardId: string,
 }
 
@@ -201,4 +221,7 @@ export type GameActionTypes = CreatingGame
     | SocketSendMessage
     | SocketMessageSent
     | SocketMessageError
-    | ToggleCardSelect
+    | SelectCards
+    | UnselectCards
+    | ClearSelectedCards
+    | RemoveHandCard

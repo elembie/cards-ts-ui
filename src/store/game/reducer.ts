@@ -1,6 +1,6 @@
 import * as types from './types'
 import { mapApiState, mapApiPlayer } from '../../games/mapping'
-import { IPlayer, IState, PlayerTypes } from '../../games/types'
+import { IPlayer, IState } from '../../games/types'
 
 const initialState: types.GameState = {
     isCreatingGame: false,
@@ -25,6 +25,10 @@ const initialState: types.GameState = {
         playersJoined: 0,
         private: true,
         tableSize: 0,
+    },
+    state: {
+        players: [],
+        status: 'none'
     },
     selectedCards: [],
 }
@@ -74,7 +78,7 @@ export const gameReducer = (
                 meta: action.game.meta,
                 state: action.game.state,
                 player: action.game.player,
-                players: mapPlayersFromState(action.game.state)
+                players: Object.keys(action.game.state).length > 0 ? mapPlayersFromState(action.game.state) : {}
             }
 
         case types.GAME_JOINING_GAME:
@@ -166,9 +170,37 @@ export const gameReducer = (
                 }
             }
 
-        case types.CARD_TOGGLE_SELECTED:
-
+        case types.CARD_ADD_SELECTED:
+            return {
+                ...state,
+                selectedCards: [
+                    ...state.selectedCards,
+                    ...action.cardIds,
+                ]
+            }    
             
+        case types.CARD_REMOVE_SELECTED:
+            return {
+                ...state,
+                selectedCards: state.selectedCards.filter(id => action.cardIds.indexOf(id) < 0)
+            }
+            
+        case types.CARD_CLEAR_SELECTED:
+            return {
+                ...state,
+                selectedCards: [],
+            } 
+            
+        case types.HAND_REMOVED_CARD:
+            return {
+                ...state,
+                player:  {
+                    ...state.player,
+                    hand: typeof state.player.hand === 'number' 
+                        ? state.player.hand 
+                        : state.player.hand.filter(c => c.id !== action.cardId)
+                }
+            }
 
         default:
             return state

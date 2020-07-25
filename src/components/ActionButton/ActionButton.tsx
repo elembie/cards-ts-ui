@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux'
 import { AppDispatch } from '../../store'
 import { sendMessage } from '../../store/game/actions'
 import { GameMessage, GameTypes } from '../../store/game/types'
+import { ShdActions } from '../../games/shd/types'
 
 interface Props {
     gameId: string,
@@ -16,12 +17,9 @@ const ActionButton: FunctionComponent<Props> = (props) => {
 
     const handleClick = () => {
         const message: GameMessage = {
-            game: GameTypes.Shithead,
-            gameId,
-            type: 'deal',
+            type: ShdActions.DEAL,
             data: {},
         }
-        console.log(message)
         dispatch(sendMessage(message))
     }
 

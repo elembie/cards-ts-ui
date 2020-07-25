@@ -5,7 +5,10 @@ import {
     ShdPlayer,
     ApiShdState,
     ShdState,
+    ShdStatues,
 } from './types'
+import store from '../../store'
+import { clearSelectedCards, selectCards, unselectCards } from '../../store/game/actions'
 
 
 export const mapShdApiCard = (card: ApiShdCard): ShdCard => {
@@ -52,6 +55,21 @@ export const mapShdApiState = (state: ApiShdState): ShdState => {
     }
 }
 
-const shdCanSelectCard = (cardId: string) => {
-    const gameState = store.getState
+export const shdToggleCard = (cardId: string) => {
+    console.log('TOGGLING SHD CARD')
+    const { player, selectedCards, state: { status } } = store.getState().game
+    const shdPlayer = player as ShdPlayer
+    const isSelected = selectedCards.indexOf(cardId) >= 0
+
+    if (isSelected) {
+        store.dispatch(unselectCards([cardId]))
+        return
+    }
+
+    if (status === ShdStatues.PREP) {
+        if (selectedCards.length > 0) {
+            store.dispatch(clearSelectedCards())
+        }
+        store.dispatch(selectCards([cardId]))
+    }
 }

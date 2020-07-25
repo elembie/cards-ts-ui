@@ -1,12 +1,18 @@
 .base {
     border-radius: 5%;
     &.hand {
+
         -webkit-box-shadow: 6px 4px 8px -5px rgba(0,0,0,0.75);
         -moz-box-shadow: 6px 4px 8px -5px rgba(0,0,0,0.75);
         box-shadow: 6px 4px 8px -5px rgba(0,0,0,0.75);
+
         &:hover {
-            margin-top: -20px;
+            margin-top: -10px;
         }  
+
+        &.selected {
+            margin-top: -45px;
+        }
     }
 
     &.table {

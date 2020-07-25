@@ -61,3 +61,12 @@ export interface ApiShdState extends IState {
     table: ShdCard[]
     total_players: number
 }
+
+export enum ShdStatues {
+    PREP = 'PREP',
+}
+
+export enum ShdActions {
+    DEAL = 'DEAL',
+    SWAP = 'SWAP',
+}

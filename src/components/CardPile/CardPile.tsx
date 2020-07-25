@@ -5,18 +5,21 @@ import styles from './CardPile.module.scss'
 
 interface Props {
     cards: ICard[]
-    offset: number
+    offset: number,
+    onClick?: (cards: ICard[]) => void
 }
 
 const CardPile: FunctionComponent<Props> = (props) => {
     
-    const { cards, offset } = props
+    const { cards, offset, onClick } = props
+
+    const handleClick = onClick ? onClick : () => {}
 
     return (
-        <div className={styles.base}>
+        <div className={styles.base} onClick={() => handleClick(cards)}>
             {cards.map((c, i) => (
             <div className={styles.pile} style={{top: `-${i*12}vh`, zIndex: -10*i, left: -i*3}}>
-                <Card location='table' suit={c.suit} value={c.value} key={c.id}/>
+                <Card location='table' card={c} key={c.id}/>
             </div>
             ))}
         </div>

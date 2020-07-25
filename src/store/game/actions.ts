@@ -289,6 +289,14 @@ export const messageError = (error: string): types.GameActionTypes => {
 export const sendMessage = (message: types.GameMessage) => {
     return async (dispatch: Dispatch<AppActions>, getState: () => RootState) => {
 
+        const { meta: { gameType, id } } = getState().game
+
+        const socketMessage: types.SocketMessage = {
+            ...message,
+            game: gameType,
+            gameId: id,
+        }
+
         dispatch(sendingMessage())
 
         const socket = getState().game.socket
@@ -299,16 +307,37 @@ export const sendMessage = (message: types.GameMessage) => {
             return
         }
 
-        socket.send(JSON.stringify(message))
+        console.log('Sending:', socketMessage)
+        socket.send(JSON.stringify(socketMessage))
 
         dispatch(sentMessage())
 
     }
 }
 
-export const toggleCardSelect = (cardId: string) => {
+export const selectCards = (cardIds: string[]): types.GameActionTypes => {
     return {
-        type: types.CARD_TOGGLE_SELECTED,
+        type: types.CARD_ADD_SELECTED,
+        cardIds,
+    }
+}
+
+export const unselectCards = (cardIds: string[]): types.GameActionTypes => {
+    return {
+        type: types.CARD_REMOVE_SELECTED,
+        cardIds,
+    }
+}
+
+export const clearSelectedCards = (): types.GameActionTypes => {
+    return {
+        type: types.CARD_CLEAR_SELECTED,
+    }
+}
+
+export const removeHandCard = (cardId: string): types.GameActionTypes => {
+    return {
+        type: types.HAND_REMOVED_CARD,
         cardId,
     }
 }

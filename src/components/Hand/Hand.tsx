@@ -1,9 +1,10 @@
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useCallback } from 'react'
 import { ICard } from '../../games/types';
 import styles from './Hand.module.scss'
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/rootReducer';
 import Card from '../Card';
+import { selectCard } from '../../games/logic';
 
 interface Props {
     cards: ICard[]
@@ -11,13 +12,18 @@ interface Props {
 
 const Hand: FunctionComponent<Props> = (props) => {
 
-    const { player } = useSelector((state: RootState) => state.game)
+    const { player, meta: { gameType } } = useSelector((state: RootState) => state.game)
 
     const hand = typeof player.hand === 'number' || player.hand === undefined 
         ? [] 
         : player.hand.sort((a, b) => a.value - b.value)
 
     const width = 0.6 * 200 * hand.length
+
+    const handleClick = useCallback((cardId: string) => {
+        console.log('CLICKED:', cardId)
+        selectCard(cardId, gameType)
+    }, [gameType])
 
     return (
         <div className={styles.base}>
@@ -27,7 +33,7 @@ const Hand: FunctionComponent<Props> = (props) => {
                         const offset = -i * 200 + i * 60 - 50
                         return (
                             <div style={{transform: `translateX(${offset}px)`}}>
-                                <Card value={c.value} suit={c.suit} location='hand'/>
+                                <Card card={c} location='hand' onClick={handleClick}/>
                             </div>
                         )
                     })}
