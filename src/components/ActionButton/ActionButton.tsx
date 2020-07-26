@@ -1,31 +1,18 @@
 import React, { FunctionComponent } from 'react'
 import styles from './ActionButton.module.scss'
-import { useDispatch } from 'react-redux'
-import { AppDispatch } from '../../store'
-import { sendMessage } from '../../store/game/actions'
-import { GameMessage, GameTypes } from '../../store/game/types'
-import { ShdActions } from '../../games/shd/types'
+import { handleActionButton } from '../../games/logic'
+import { GameTypes } from '../../store/game/types'
 
 interface Props {
-    gameId: string,
+    text: string,
+    onClick: () => void
 }
 
 const ActionButton: FunctionComponent<Props> = (props) => {
-
-    const dispatch = useDispatch<AppDispatch>()
-    const { gameId } = props
-
-    const handleClick = () => {
-        const message: GameMessage = {
-            type: ShdActions.DEAL,
-            data: {},
-        }
-        dispatch(sendMessage(message))
-    }
-
+    const { text, onClick } = props
     return (
-        <div className={styles.base} onClick={handleClick}>
-            Deal
+        <div className={styles.base} onClick={onClick}>
+            {text}
         </div>
     )
 }

@@ -51,7 +51,7 @@ const PlayerTable: FunctionComponent<Props> = (props) => {
     const handleClick = (cards: ICard[]) => {
         switch (status) {
             case ShdStatues.PREP:
-                if (selectedCards.length === 1) {
+                if (selectedCards.length === 1 && !gamePlayer.isReady) {
                     const swap = {
                         hand: selectedCards[0],
                         table: cards[0].id

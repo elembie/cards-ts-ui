@@ -70,8 +70,13 @@ export enum ShdStatues {
 export enum ShdActions {
     DEAL = 'DEAL',
     SWAP = 'SWAP',
+    READY = 'READY'
 }
 
 export const isShdState = (anyState: IState ): anyState is ShdState => {
     return (anyState as ShdState).gameType === GameTypes.Shithead
+}
+
+export const isShdPlayer = (anyPlayer: IPlayer): anyPlayer is ShdPlayer => {
+    return (anyPlayer as ShdPlayer).isSh !== null && (anyPlayer as ShdPlayer).isSh !== undefined
 }

@@ -6,9 +6,12 @@ import {
     ApiShdState,
     ShdState,
     ShdStatues,
+    isShdState,
+    isShdPlayer,
+    ShdActions,
 } from './types'
 import store from '../../store'
-import { clearSelectedCards, selectCards, unselectCards } from '../../store/game/actions'
+import { clearSelectedCards, selectCards, unselectCards, sendMessage } from '../../store/game/actions'
 import { GameTypes } from '../../store/game/types'
 
 
@@ -73,4 +76,29 @@ export const shdToggleCard = (cardId: string) => {
         }
         store.dispatch(selectCards([cardId]))
     }
+}
+
+export const shdGetActionButtonProps = (): {show: boolean, text: string, action: () => void} => {
+    const { state, player } = store.getState().game
+    
+    if (!isShdState(state) || !isShdPlayer(player)) {
+        return {show: false, text: '', action: () => {}}
+    }
+
+    if (state.status === ShdStatues.PREP && !player.isReady) {
+        return {
+            show: true, 
+            text: 'READY!', 
+            action: () => store.dispatch(sendMessage({
+                type: ShdActions.READY,
+                data: {}
+            }))
+        }
+    }
+
+    return {show: false, text: '', action: () => {}}
+}
+
+export const shdHandleActionButton = () => {
+    console.log('ACTION BUTTON')
 }
