@@ -342,3 +342,11 @@ export const removeHandCard = (cardId: string): types.GameActionTypes => {
     }
 }
 
+// SHD actions
+export const shdSwapTable = (cards: {hand: string, table: string}): types.GameActionTypes => {
+    return {
+        type: types.SHD_SWAP_TABLE,
+        cards,
+    }
+}
+

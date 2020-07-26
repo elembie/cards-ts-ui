@@ -4,23 +4,22 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store/rootReducer';
 import { ShdPlayer, ShdStatues, ShdActions, ShdCard } from '../../games/shd/types';
 import CardPile from '../CardPile';
-import { ICard } from '../../games/types';
+import { ICard, IPlayer } from '../../games/types';
 import { GameMessage } from '../../store/game/types';
 import { AppDispatch } from '../../store';
-import { sendMessage, removeHandCard } from '../../store/game/actions';
+import { sendMessage, removeHandCard, shdSwapTable } from '../../store/game/actions';
 
 interface Props {
     orientation: 'u' | 'd' | 'l' | 'r',
-    playerId: string | undefined,
+    player: IPlayer,
 }
 
 const PlayerTable: FunctionComponent<Props> = (props) => {
     
-    const { orientation, playerId } = props
+    const { orientation, player } = props
 
     const dispatch = useDispatch<AppDispatch>()
-    const { selectedCards, state: { status }, player: { hand } } = useSelector((state: RootState) => state.game )
-    const player = useSelector((state: RootState) => state.game.players[playerId || ''])
+    const { selectedCards, state: { status } } = useSelector((state: RootState) => state.game )
     const gameType = useSelector((state: RootState) => state.game.meta.gameType)
 
     const [table, setTable] = useState<(ICard)[]>([{} as ICard, {} as ICard, {} as ICard])
@@ -28,7 +27,6 @@ const PlayerTable: FunctionComponent<Props> = (props) => {
 
     // TODO put into game specific Player table
     const gamePlayer = player as ShdPlayer
-    const playerHand = typeof hand === 'number' ? [] : hand as ShdCard[]
     const playerTable = gamePlayer?.table || []
     const playerHidden = gamePlayer?.hidden || []
 
@@ -54,21 +52,14 @@ const PlayerTable: FunctionComponent<Props> = (props) => {
         switch (status) {
             case ShdStatues.PREP:
                 if (selectedCards.length === 1) {
-                    console.log('PLAYERHAND',playerHand)
-                    const handCard = playerHand.find(c => c.id === selectedCards[0]) || {} as ShdCard
-                    console.log('HAND CARD',handCard)
-                    handCard.order = (cards[0] as ShdCard).order
-                    setTable([
-                        ...table.filter(c => c.id !== cards[0].id),
-                        handCard,
-                    ])
-                    dispatch(removeHandCard(selectedCards[0]))
+                    const swap = {
+                        hand: selectedCards[0],
+                        table: cards[0].id
+                    }
+                    dispatch(shdSwapTable(swap))
                     dispatch(sendMessage({
                         type: ShdActions.SWAP,
-                        data: {
-                            hand: selectedCards[0],
-                            table: cards[0].id
-                        },
+                        data: swap,
                     }))
                 }
                 break

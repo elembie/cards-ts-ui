@@ -13,11 +13,10 @@ const Game: FunctionComponent = () => {
     const { 
         meta: {
             tableSize,
-            players,
+            players: opponents,
         },
-        player: {
-            id: playerId
-        }
+        player,
+        players,
     } = useSelector((state: RootState) => state.game)
 
     const { 
@@ -27,12 +26,12 @@ const Game: FunctionComponent = () => {
     } = useSelector((state: RootState) => state.session)
     const seats = Constants.seatConfig[tableSize] 
 
-    while(players.length < tableSize) {
-        players.push('')
+    while(opponents.length < tableSize) {
+        opponents.push('')
     }
 
-    const pidx = players.indexOf(id)
-    const reversed = players.slice(pidx+1, players.length).concat(players.slice(0, pidx)).reverse()
+    const pidx = opponents.indexOf(id)
+    const reversed = opponents.slice(pidx+1, opponents.length).concat(opponents.slice(0, pidx)).reverse()
     const ordered = seats.map(active => active ? reversed.pop() : '')
 
     return (
@@ -46,7 +45,7 @@ const Game: FunctionComponent = () => {
                         
                         {seats[2] && (
                             <div className={styles.player}>
-                                <PlayerTable playerId={ordered[2]} orientation="d"/>
+                                {ordered[2] && <PlayerTable player={players[ordered[2]]} orientation="d"/>}
                                 <PlayerCard playerId={ordered[2] || ''}/>
                             </div>
                         )}
@@ -54,7 +53,7 @@ const Game: FunctionComponent = () => {
 
                         {seats[3] && (
                             <div className={styles.player}>
-                                <PlayerTable playerId={ordered[3]} orientation="d"/>
+                                {ordered[3] && <PlayerTable player={players[ordered[3]]} orientation="d"/>}
                                 <PlayerCard playerId={ordered[3] || ''}/>
                             </div>
                         )}
@@ -62,7 +61,7 @@ const Game: FunctionComponent = () => {
 
                         {seats[4] && (
                             <div className={styles.player}>
-                                <PlayerTable playerId={ordered[4]} orientation="d"/>
+                                {ordered[4] && <PlayerTable player={players[ordered[4]]} orientation="d"/>}
                                 <PlayerCard playerId={ordered[4] || ''}/>
                             </div>
                         )}
@@ -80,14 +79,14 @@ const Game: FunctionComponent = () => {
                         
                         {seats[1] && (
                             <div className={styles.player}>
-                                <PlayerTable playerId={ordered[1]} orientation="r"/>
+                                {ordered[1] && <PlayerTable player={players[ordered[1]]} orientation="r"/>}
                                 <PlayerCard playerId={ordered[1] || ''}/>
                             </div>
                         )}
 
                         {seats[0] && (
                             <div className={styles.player}>
-                                <PlayerTable playerId={ordered[0]} orientation="r"/>
+                                {ordered[0] && <PlayerTable player={players[ordered[0]]} orientation="r"/>}
                                 <PlayerCard playerId={ordered[0] || ''}/>
                             </div>
                         )}
@@ -102,7 +101,7 @@ const Game: FunctionComponent = () => {
 
                         {seats[5] && (
                             <div className={styles.player}>
-                                <PlayerTable playerId={ordered[5]} orientation="l"/>
+                                {ordered[5] && <PlayerTable player={players[ordered[5]]} orientation="l"/>}
                                 <PlayerCard playerId={ordered[5] || ''}/>
                             </div>
                         )}
@@ -110,7 +109,7 @@ const Game: FunctionComponent = () => {
 
                         {seats[6] && (
                             <div className={styles.player}>
-                                <PlayerTable playerId={ordered[6]} orientation="l"/>
+                                {ordered[6] && <PlayerTable player={players[ordered[6]]} orientation="l"/>}
                                 <PlayerCard playerId={ordered[6] || ''}/>
                             </div>
                         )}
@@ -121,7 +120,7 @@ const Game: FunctionComponent = () => {
                 </div>
 
                 <div className={styles.hand}>
-                    <PlayerTable playerId={playerId} orientation='u'/>
+                    {player && <PlayerTable player={player} orientation='u'/>}
                     <Hand cards={[]}/>
                 </div>
             </div>

@@ -203,6 +203,16 @@ export interface RemoveHandCard {
     cardId: string,
 }
 
+// SHD actions
+export const SHD_SWAP_TABLE = 'SHD_SWAP_TABLE'
+export interface ShdSwapTable {
+    type: typeof SHD_SWAP_TABLE,
+    cards: {
+        table: string,
+        hand: string,
+    }
+}
+
 export type GameActionTypes = CreatingGame
     | CreatedGame
     | FetchingGame
@@ -225,3 +235,5 @@ export type GameActionTypes = CreatingGame
     | UnselectCards
     | ClearSelectedCards
     | RemoveHandCard
+    // SHD actions
+    | ShdSwapTable

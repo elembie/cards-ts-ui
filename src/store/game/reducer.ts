@@ -1,6 +1,7 @@
 import * as types from './types'
 import { mapApiState, mapApiPlayer } from '../../games/mapping'
-import { IPlayer, IState } from '../../games/types'
+import { IPlayer, IState, ICard } from '../../games/types'
+import { isShdState, ShdCard, ShdPlayer } from '../../games/shd/types'
 
 const initialState: types.GameState = {
     isCreatingGame: false,
@@ -27,6 +28,7 @@ const initialState: types.GameState = {
         tableSize: 0,
     },
     state: {
+        gameType: types.GameTypes.Shithead,
         players: [],
         status: 'none'
     },
@@ -200,6 +202,31 @@ export const gameReducer = (
                         ? state.player.hand 
                         : state.player.hand.filter(c => c.id !== action.cardId)
                 }
+            }
+
+        // SHD actions
+        case types.SHD_SWAP_TABLE:
+            if (isShdState(state.state)) {
+                return {
+                    ...state,
+                    player: {
+                        ...state.player,
+                        hand: [
+                            ...(state.player.hand as ICard[]).filter(c => c.id !== action.cards.hand),
+                            (state.player as ShdPlayer).table.find(c => c.id === action.cards.table)
+                        ],
+                        table: [
+                            ...(state.player as ShdPlayer).table.filter(c => c.id !== action.cards.table),
+                            {
+                                ...(state.player.hand as ICard[]).find(c => c.id === action.cards.hand),
+                                order: (state.player as ShdPlayer).table.find(c => c.id === action.cards.table)?.order,
+                            }
+                        ]
+                    } as ShdPlayer,
+                }
+
+            } else {
+                return state
             }
 
         default:

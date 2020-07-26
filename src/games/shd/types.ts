@@ -1,4 +1,5 @@
 import { ICard, IPlayer, IState } from "../types";
+import { GameTypes } from "../../store/game/types";
 
 export interface ShdCard extends ICard {
     isSpecial: boolean,
@@ -69,4 +70,8 @@ export enum ShdStatues {
 export enum ShdActions {
     DEAL = 'DEAL',
     SWAP = 'SWAP',
+}
+
+export const isShdState = (anyState: IState ): anyState is ShdState => {
+    return (anyState as ShdState).gameType === GameTypes.Shithead
 }

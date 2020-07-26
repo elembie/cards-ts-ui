@@ -1,4 +1,5 @@
 import { ShdState, ShdPlayer, ShdCard, ApiShdState, ApiShdCard, ApiShdPlayer } from './shd/types'
+import { GameTypes } from '../store/game/types'
 
 export interface ICard {
     id: string,
@@ -13,6 +14,7 @@ export interface IPlayer {
 }
 
 export interface IState {
+    gameType: GameTypes,
     players: IPlayer[],
     status: string,
 }

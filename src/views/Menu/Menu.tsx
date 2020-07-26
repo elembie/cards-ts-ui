@@ -25,14 +25,7 @@ const Menu: FunctionComponent = () => {
     const { isNewUser, user: { inGame, gameId }} = useSelector((state: RootState) => state.session)
     const { hasLeftGame, isLeavingGame } = useSelector((state: RootState) => state.game)
 
-    console.log('Has left game', hasLeftGame)
-    console.log('Is leaving game', isLeavingGame)
-    console.log('Is in game', inGame)
-    console.log('Game ID', gameId)
-
     if (!(hasLeftGame || isLeavingGame) && inGame && gameId !== undefined) {
-
-        console.log('Redirecting back to game')
 
         return <Redirect to={`/game/${gameId}`} />
         

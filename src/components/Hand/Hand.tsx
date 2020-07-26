@@ -21,7 +21,6 @@ const Hand: FunctionComponent<Props> = (props) => {
     const width = 0.6 * 200 * hand.length
 
     const handleClick = useCallback((cardId: string) => {
-        console.log('CLICKED:', cardId)
         selectCard(cardId, gameType)
     }, [gameType])
 
@@ -32,8 +31,8 @@ const Hand: FunctionComponent<Props> = (props) => {
                     { hand.map((c, i) => {
                         const offset = -i * 200 + i * 60 - 50
                         return (
-                            <div style={{transform: `translateX(${offset}px)`}}>
-                                <Card card={c} location='hand' onClick={handleClick}/>
+                            <div style={{transform: `translateX(${offset}px)`}} key={c.id}>
+                                <Card card={c} location='hand' onClick={handleClick} />
                             </div>
                         )
                     })}

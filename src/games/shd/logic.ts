@@ -9,6 +9,7 @@ import {
 } from './types'
 import store from '../../store'
 import { clearSelectedCards, selectCards, unselectCards } from '../../store/game/actions'
+import { GameTypes } from '../../store/game/types'
 
 
 export const mapShdApiCard = (card: ApiShdCard): ShdCard => {
@@ -45,6 +46,7 @@ export const mapShdApiPlayer = (player: ApiShdPlayer): ShdPlayer => {
 
 export const mapShdApiState = (state: ApiShdState): ShdState => {
     return {
+        gameType: GameTypes.Shithead, 
         dead: state.dead,
         stack: state.stack,
         status: state.status,
@@ -56,7 +58,6 @@ export const mapShdApiState = (state: ApiShdState): ShdState => {
 }
 
 export const shdToggleCard = (cardId: string) => {
-    console.log('TOGGLING SHD CARD')
     const { player, selectedCards, state: { status } } = store.getState().game
     const shdPlayer = player as ShdPlayer
     const isSelected = selectedCards.indexOf(cardId) >= 0
