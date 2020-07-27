@@ -30,7 +30,8 @@ const initialState: types.GameState = {
     state: {
         gameType: types.GameTypes.Shithead,
         players: [],
-        status: 'none'
+        status: 'none',
+        stack: 0,
     },
     selectedCards: [],
 }

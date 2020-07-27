@@ -58,7 +58,6 @@ export interface ApiShdState extends IState {
     current_value: number,
     dead: number,
     players: ApiShdPlayer[]
-    stack: number,
     table: ShdCard[]
     total_players: number
 }

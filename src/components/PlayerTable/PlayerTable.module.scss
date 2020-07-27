@@ -9,13 +9,13 @@
     &.u {
         height: 12vh;
         width: 100%;
-        bottom: 160px;
+        bottom: 14vh;
         flex-direction: row;
     }
 
     &.d {
         left: 50%;
-        top: 120px;
+        top: 12vh;
         height: 12vh;
         width: 100%;
         transform: translateX(-50%);
@@ -24,7 +24,7 @@
 
     &.l {
         top: 50%;
-        right: 210px;
+        right: 190px;
         height: 100%;
         width: 12vh;
         transform: translateY(-50%);
@@ -33,7 +33,7 @@
 
     &.r {
         top: 50%;
-        left: 210px;
+        left: 190px;
         height: 100%;
         width: 12vh;
         transform: translateY(-50%);

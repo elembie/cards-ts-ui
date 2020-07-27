@@ -70,7 +70,7 @@ const PlayerTable: FunctionComponent<Props> = (props) => {
 
     return (
         <div className={`${styles.base} ${styles[orientation]}`}>
-            {piles.map(p => <CardPile cards={p} offset={1} onClick={orientation === 'u' ? handleClick : () => {}}/>)}
+            {piles.map(p => <CardPile cards={p} offset={3} onClick={orientation === 'u' ? handleClick : () => {}}/>)}
         </div>
     )
 }

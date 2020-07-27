@@ -18,7 +18,7 @@ const CardPile: FunctionComponent<Props> = (props) => {
     return (
         <div className={styles.base} onClick={() => handleClick(cards)}>
             {cards.map((c, i) => (
-            <div className={styles.pile} style={{top: `-${i*12}vh`, zIndex: -10*i, left: -i*3}} key={c.id}>
+            <div className={styles.pile} style={{top: `-${i*12}vh`, zIndex: -10*i, left: -i*offset}} key={c.id}>
                 <Card location='table' card={c} key={c.id}/>
             </div>
             ))}
