@@ -2,6 +2,8 @@
 
 .base {
     border-radius: 5%;
+    display: flex;
+
     &.hand {
 
         -webkit-box-shadow: 6px 4px 8px -5px rgba(0,0,0,0.75);
@@ -16,16 +18,16 @@
         &.selected {
             margin-top: -3vh;
         }
+
+        & svg {
+            height: 400px;
+        }
     }
 
     &.table {
 
-        margin-left: 12px;
         height: 100%;
-
-        &:first-child {
-            margin-left: 0;
-        }
+        max-width: 80px;
 
         & svg {
             height: 100%;

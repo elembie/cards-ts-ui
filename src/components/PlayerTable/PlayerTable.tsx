@@ -71,7 +71,7 @@ const PlayerTable: FunctionComponent<Props> = (props) => {
         <div className={`${styles.base} ${styles[orientation]}`}>
             <div className={styles.padding}/>
             {piles.map(p => 
-                <div className={styles.pileContainer}>
+                <div className={styles.pileContainer} key={p.map(p => p.id).join('-')}>
                     {<CardPile cards={p} offset={3} onClick={orientation === 'u' ? handleClick : () => {}}/>}
                 </div>
             )}
