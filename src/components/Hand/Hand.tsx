@@ -1,10 +1,10 @@
 import React, { FunctionComponent, useCallback } from 'react'
-import { ICard } from '../../games/types';
+import { ICard } from 'games/types';
 import styles from './Hand.module.scss'
 import { useSelector } from 'react-redux';
-import { RootState } from '../../store/rootReducer';
-import Card from '../Card';
-import { selectCard } from '../../games/logic';
+import { RootState } from 'store/rootReducer';
+import Card from 'components/Card';
+import { selectCard } from 'games/logic';
 
 interface Props {
     cards: ICard[]

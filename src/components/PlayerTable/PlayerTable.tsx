@@ -1,13 +1,12 @@
 import React, { FunctionComponent, useState, useEffect } from 'react'
 import styles from './PlayerTable.module.scss'
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../../store/rootReducer';
-import { ShdPlayer, ShdStatues, ShdActions, ShdCard } from '../../games/shd/types';
-import CardPile from '../CardPile';
-import { ICard, IPlayer } from '../../games/types';
-import { GameMessage } from '../../store/game/types';
-import { AppDispatch } from '../../store';
-import { sendMessage, removeHandCard, shdSwapTable } from '../../store/game/actions';
+import { RootState } from 'store/rootReducer';
+import { ShdPlayer, ShdStatues, ShdActions } from 'games/shd/types';
+import CardPile from 'components/CardPile';
+import { ICard, IPlayer } from 'games/types';
+import { AppDispatch } from 'store';
+import { sendMessage, shdSwapTable } from 'store/game/actions';
 
 interface Props {
     orientation: 'u' | 'd' | 'l' | 'r',
@@ -70,7 +69,13 @@ const PlayerTable: FunctionComponent<Props> = (props) => {
 
     return (
         <div className={`${styles.base} ${styles[orientation]}`}>
-            {piles.map(p => <CardPile cards={p} offset={3} onClick={orientation === 'u' ? handleClick : () => {}}/>)}
+            <div className={styles.padding}/>
+            {piles.map(p => 
+                <div className={styles.pileContainer}>
+                    <CardPile cards={p} offset={3} onClick={orientation === 'u' ? handleClick : () => {}}/>
+                </div>
+            )}
+            <div className={styles.padding}/>
         </div>
     )
 }

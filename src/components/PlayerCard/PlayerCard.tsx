@@ -1,9 +1,9 @@
 import React, { FunctionComponent, useEffect } from 'react'
 import styles from './PlayerCard.module.scss'
 import { useSelector, useDispatch } from 'react-redux'
-import { RootState } from '../../store/rootReducer'
-import { AppDispatch } from '../../store'
-import { getPlayer } from '../../store/game/actions'
+import { RootState } from 'store/rootReducer'
+import { AppDispatch } from 'store'
+import { getPlayer } from 'store/game/actions'
 
 export interface Props {
     playerId: string

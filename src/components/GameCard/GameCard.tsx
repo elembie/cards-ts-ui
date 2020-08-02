@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react'
-import { GameTypes } from '../../store/game/types';
+import { GameTypes } from 'store/game/types';
 import styles from './GameCard.module.scss'
 
 export interface Props {

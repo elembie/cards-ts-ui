@@ -1,11 +1,11 @@
 import React, { FunctionComponent } from 'react'
 import { Auth } from 'aws-amplify'
 import styles from './Header.module.scss'
-import { AppDispatch } from '../../store'
+import { AppDispatch } from 'store'
 import { useDispatch, useSelector } from 'react-redux'
-import { leaveGame } from '../../store/game/actions'
-import { RootState } from '../../store/rootReducer'
-import Button from '../Button'
+import { leaveGame } from 'store/game/actions'
+import { RootState } from 'store/rootReducer'
+import Button from 'components/Button'
 
 export interface Props {
     username: string,

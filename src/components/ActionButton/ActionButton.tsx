@@ -1,7 +1,5 @@
 import React, { FunctionComponent } from 'react'
 import styles from './ActionButton.module.scss'
-import { handleActionButton } from '../../games/logic'
-import { GameTypes } from '../../store/game/types'
 
 interface Props {
     text: string,

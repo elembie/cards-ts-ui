@@ -1,12 +1,12 @@
 import React, { FunctionComponent, useState } from 'react'
-import { GameTypes } from '../../store/game/types'
-import GameCard from '../GameCard'
-import Button from '../Button'
+import { GameTypes } from 'store/game/types'
+import GameCard from 'components/GameCard'
+import Button from 'components/Button'
 import styles from './Forms.module.scss'
 import { useSelector, useDispatch } from 'react-redux'
-import { RootState } from '../../store/rootReducer'
-import { AppDispatch } from '../../store'
-import { createGame } from '../../store/game/actions'
+import { RootState } from 'store/rootReducer'
+import { AppDispatch } from 'store'
+import { createGame } from 'store/game/actions'
 
 
 const NewGameForm: FunctionComponent = (props) => {

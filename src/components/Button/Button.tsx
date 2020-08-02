@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react'
 import styles from './Button.module.scss'
-import Spinner from '../Spinner'
+import Spinner from 'components/Spinner'
 
 export interface Props {
     classname?: string,

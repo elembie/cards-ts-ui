@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react'
-import Constants from '../../config/constants'
+import Constants from 'config/constants'
 import styles from './Loading.module.scss'
-import Modal from '../Modal'
+import Modal from 'components/Modal'
 
 export interface Props {
     dark: boolean

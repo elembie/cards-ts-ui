@@ -1,11 +1,11 @@
 import React, { FunctionComponent, useState } from 'react'
-import Modal from '../Modal'
-import Button from '../Button'
+import Modal from 'components/Modal'
+import Button from 'components/Button'
 import styles from './NewUserModal.module.scss'
-import { AppDispatch } from '../../store'
+import { AppDispatch } from 'store'
 import { useDispatch, useSelector } from 'react-redux'
-import { createUser } from '../../store/session/actions'
-import { RootState } from '../../store/rootReducer'
+import { createUser } from 'store/session/actions'
+import { RootState } from 'store/rootReducer'
 
 export interface Props {
     isNewUser: boolean,

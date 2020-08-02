@@ -1,11 +1,11 @@
 import React, { FunctionComponent, useEffect, useState } from 'react'
 import styles from './Table.module.scss'
-import ActionButton from '../ActionButton'
+import ActionButton from 'components/ActionButton'
 import { useSelector } from 'react-redux'
-import { RootState } from '../../store/rootReducer'
-import { getActionButtonProps } from '../../games/logic'
-import { ICard } from '../../games/types'
-import CardPile from '../CardPile'
+import { RootState } from 'store/rootReducer'
+import { getActionButtonProps } from 'games/logic'
+import { ICard } from 'games/types'
+import CardPile from 'components/CardPile'
 
 const Table: FunctionComponent = () => {
 

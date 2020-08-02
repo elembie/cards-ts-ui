@@ -1,9 +1,9 @@
 import React, { FunctionComponent, useState, useEffect } from 'react'
 import getCard from './mapper'
 import styles from './Card.module.scss'
-import { ICard } from '../../games/types'
+import { ICard } from 'games/types'
 import { useSelector } from 'react-redux'
-import { RootState } from '../../store/rootReducer'
+import { RootState } from 'store/rootReducer'
 
 interface Props {
     card: ICard,

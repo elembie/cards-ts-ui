@@ -1,9 +1,9 @@
 import React, { FunctionComponent, useState } from 'react'
 import Button from '../Button'
 import { useDispatch, useSelector } from 'react-redux'
-import { AppDispatch } from '../../store'
-import { joinGame } from '../../store/game/actions'
-import { RootState } from '../../store/rootReducer'
+import { AppDispatch } from 'store'
+import { joinGame } from 'store/game/actions'
+import { RootState } from 'store/rootReducer'
 
 const JoinGameForm: FunctionComponent = () => {
 

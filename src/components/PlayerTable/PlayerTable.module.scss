@@ -1,9 +1,21 @@
+@import "../../styles.scss";
+
 .base {
     height: 100%;
     flex-grow: 0;
     position: absolute;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
+    border: 1px solid red;
+
+    .pileContainer {
+        width: 4*$card-width;
+    }
+
+    .padding {
+        width: 100%;
+        flex-grow: 10;
+    }
 
 
     &.u {
