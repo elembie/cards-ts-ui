@@ -79,13 +79,36 @@ export const shdToggleCard = (cardId: string) => {
 }
 
 export const shdGetActionButtonProps = (): {show: boolean, text: string, action: () => void} => {
-    const { state, player } = store.getState().game
+    const { state, meta, player } = store.getState().game
+
+    if (meta.tableSize === meta.playersJoined && !state.status) {
+        return {
+            show: true,
+            text: 'DEAL',
+            action: () => store.dispatch(sendMessage({
+                type: ShdActions.DEAL,
+                data: {},
+            }))
+        }
+    }
     
     if (!isShdState(state) || !isShdPlayer(player)) {
         return {show: false, text: '', action: () => {}}
     }
 
-    if (state.status === ShdStatues.PREP && !player.isReady) {
+    if (state.status === ShdStatues.INIT && player.isDealer) {
+
+        return {
+            show: true,
+            text: 'DEAL',
+            action: () => store.dispatch(sendMessage({
+                type: ShdActions.DEAL,
+                data: {},
+            }))
+        }
+
+    } else if (state.status === ShdStatues.PREP && !player.isReady) {
+
         return {
             show: true, 
             text: 'READY!', 

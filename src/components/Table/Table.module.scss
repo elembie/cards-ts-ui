@@ -1,14 +1,81 @@
+@import "../../styles.scss";
+
+$table-margin: 15px;
+$top-row-margin: 0.9*($table-margin + $player-table-width);
+
 .base {
+    border: 15px solid purple;
+    width: 98%;
     height: 100%;
-    width: 100%;
+    border-radius: 15%;
+    border-style: ridge;
+    box-sizing: border-box;
+    margin: auto;
 
 
-    .table {
-        border: 15px solid purple;
+    .rows {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: 100%;
+    }
+
+    .topRow {
+        margin: $table-margin $top-row-margin 0 $top-row-margin;
+        border: 1px solid green;
+        height: $player-table-width;
+        display: flex;
+        flex-direction: row;
+    }
+
+    .middleRow {
+        border: 1px solid green;
+        height: 100%;
+        display: flex;
+        flex-direction: row;
+    }
+
+    .tableSide {
+
+        &:first-child {
+            margin-left: $table-margin;
+        } 
+
+        &:last-child {
+            margin-right: $table-margin;
+        } 
+
+        border: 1px solid red;
+        height: 100%;
+        width: $player-table-width;
+        min-width: $player-table-width;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .center {
         width: 100%;
         height: 100%;
-        border-radius: 15%;
-        border-style: ridge;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .table {
+        height: 100%;
+        width: 100%;
+    }
+
+    .playerTable {
+        height: $player-table-width;
+        min-height: $player-table-width;
+        margin-bottom: 30px;
+        border: 1px solid orange;
+    }
+
+    .opponentTable {
+        width: 100%;
+        height: 100%;
+        border: 1px solid blue;
     }
 
     .container {

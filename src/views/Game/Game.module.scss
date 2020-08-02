@@ -41,7 +41,7 @@
         display: flex;
         flex-direction: column;
         align-content: stretch;
-        margin: 20vh 0 7vh 0;
+        margin: 15vh 0 2vh 0;
     }
 
     .center {
@@ -57,26 +57,5 @@
         align-items: center;
         align-content: center;
         position: relative;
-    }
-
-    .test {
-        position: absolute;
-        border: 1px solid red;
-        top: 50%;
-        left: 200px;
-        height: 100%;
-        width: 100%;
-        transform: translateY(-50%);
-    }
-
-    .test2 {
-        position: absolute;
-        border: 1px solid red;
-        left: 50%;
-        top: 80px;
-        height: 100px;
-        width: 100%;
-        transform: translateX(-50%);
-        margin: 10% 0;
     }
 }

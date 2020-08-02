@@ -72,7 +72,7 @@ const PlayerTable: FunctionComponent<Props> = (props) => {
             <div className={styles.padding}/>
             {piles.map(p => 
                 <div className={styles.pileContainer}>
-                    <CardPile cards={p} offset={3} onClick={orientation === 'u' ? handleClick : () => {}}/>
+                    {<CardPile cards={p} offset={3} onClick={orientation === 'u' ? handleClick : () => {}}/>}
                 </div>
             )}
             <div className={styles.padding}/>

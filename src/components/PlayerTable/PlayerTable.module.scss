@@ -2,14 +2,17 @@
 
 .base {
     height: 100%;
-    flex-grow: 0;
-    position: absolute;
+    width: 100%;
     display: flex;
-    justify-content: space-around;
     border: 1px solid red;
 
     .pileContainer {
-        width: 4*$card-width;
+        border: 1px dashed red;
+        margin-right: 15px;
+
+        &:last-child {
+            margin-right: none;
+        }
     }
 
     .padding {
@@ -19,37 +22,19 @@
 
 
     &.u {
-        height: 12vh;
-        width: 100%;
-        bottom: 14vh;
-        flex-direction: row;
+
     }
 
     &.d {
-        left: 50%;
-        top: 12vh;
-        height: 12vh;
-        width: 100%;
-        transform: translateX(-50%);
         flex-direction: row;
     }
 
     &.l {
-        top: 50%;
-        right: 190px;
-        height: 100%;
-        width: 12vh;
-        transform: translateY(-50%);
-        flex-direction: column;
+
     }
 
     &.r {
-        top: 50%;
-        left: 190px;
-        height: 100%;
-        width: 12vh;
-        transform: translateY(-50%);
-        flex-direction: column;
+
     }
 
     .sides {

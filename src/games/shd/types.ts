@@ -63,6 +63,7 @@ export interface ApiShdState extends IState {
 }
 
 export enum ShdStatues {
+    INIT = 'INIT',
     PREP = 'PREP',
 }
 
