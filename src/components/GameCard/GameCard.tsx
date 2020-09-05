@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from 'react'
 import { GameTypes } from 'store/game/types';
 import styles from './GameCard.module.scss'
+import { getGameTypeEmojiCode } from 'games/logic';
 
 export interface Props {
     gameType: GameTypes
@@ -8,14 +9,14 @@ export interface Props {
     isSelected: boolean,
 }
 
-const gamesMap: { [key in GameTypes]: { text: string, emoji: React.ReactNode } } = {
+export const gameTypesEmojiMap: { [key in GameTypes]: { text: string, emoji: React.ReactNode } } = {
     [GameTypes.Shithead]: {
         text: 'SHITHEAD',
-        emoji: (<span>{'\u{1F4A9}'}</span>)
+        emoji: (<span>{getGameTypeEmojiCode(GameTypes.Shithead)}</span>)
     },
     [GameTypes.ChaseTheQueen]: {
         text: 'CHASE THE QUEEN',
-        emoji: (<span>{'\u{1F478}'}</span>)
+        emoji: (<span>{getGameTypeEmojiCode(GameTypes.ChaseTheQueen)}</span>)
     },
 }
 
@@ -23,7 +24,7 @@ const GameCard: FunctionComponent<Props> = (props) => {
     
     const { gameType, isSelected, onClick } = props
 
-    const game = gamesMap[gameType] 
+    const game = gameTypesEmojiMap[gameType] 
     const baseStyle = isSelected 
         ? `${styles.base} ${styles.selected}`
         : styles.base 

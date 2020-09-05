@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useCallback } from 'react'
+import React, { FunctionComponent } from 'react'
 import { ICard } from 'games/types';
 import styles from './Hand.module.scss'
 import { useSelector } from 'react-redux';
@@ -20,16 +20,16 @@ const Hand: FunctionComponent<Props> = (props) => {
 
     const width = 0.6 * 200 * hand.length
 
-    const handleClick = useCallback((cardId: string) => {
+    const handleClick = (cardId: string) => {
         selectCard(cardId, gameType)
-    }, [gameType])
+    }
 
     return (
         <div className={styles.base}>
             <div className={styles.hand}>
                 <div className={styles.cards} style={{width: `${width}px`}}>
                     { hand.map((c, i) => {
-                        const offset = -i * 200 + i * 60 - 50
+                        const offset = -i * 200 + i * 60 - 100
                         return (
                             <div style={{transform: `translateX(${offset}px)`}} key={c.id}>
                                 <Card card={c} location='hand' onClick={handleClick} />
@@ -37,6 +37,9 @@ const Hand: FunctionComponent<Props> = (props) => {
                         )
                     })}
                 </div>
+            </div>
+            <div className={styles.overlay}>
+                Hi
             </div>
         </div>
     )

@@ -1,4 +1,4 @@
-import { ShdState, ShdPlayer, ShdCard, ApiShdState, ApiShdCard, ApiShdPlayer } from './shd/types'
+import { ShdState, ShdPlayer, ShdCard, ApiShdState, ApiShdCard, ApiShdPlayer, ShdStatues } from './shd/types'
 import { GameTypes } from '../store/game/types'
 
 export interface ICard {
@@ -23,6 +23,7 @@ export interface IState {
 export type StateTypes = IState | ShdState
 export type PlayerTypes = IPlayer | ShdPlayer
 export type CardTypes = ICard | ShdCard
+export type Statuses = ShdStatues
 
 export type ApiStateTypes = ApiShdState
 export type ApiPlayerTypes = ApiShdPlayer

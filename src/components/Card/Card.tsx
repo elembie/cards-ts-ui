@@ -15,20 +15,22 @@ interface Props {
 const Card: FunctionComponent<Props> = (props) => {
 
     const { card, style, location, onClick } = props
-    const [Card, setCard] = useState<React.FunctionComponent>()
+    //const [Card, setCard] = useState<React.FunctionComponent>()
 
     const selectedCards = useSelector((state: RootState) => state.game.selectedCards)
     const isSelected = selectedCards.indexOf(card.id) >= 0
 
     const handleClick = onClick ? onClick : () => {}
     
-    useEffect(() => { 
-        setCard(getCard(card.suit, card.value))
-    }, [card.suit, card.value])
+    // useEffect(() => { 
+    //     setCard(getCard(card.id, card.suit, card.value))
+    // }, [card.id, card.suit, card.value])
+
+    const Card = getCard(card.id, card.suit, card.value)
 
     return (
         <div className={`${styles.base} ${styles[location]} ${isSelected ? styles.selected : ''}`} style={style} onClick={() => handleClick(card.id)}>
-            {Card && <Card/>}
+            {Card !== undefined && <Card/>}
         </div>
     )
 }

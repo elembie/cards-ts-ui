@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from 'store/rootReducer'
 import { AppDispatch } from 'store'
 import { getPlayer } from 'store/game/actions'
+import { getPlayerStatusString } from 'games/logic'
 
 export interface Props {
     playerId: string
@@ -12,9 +13,12 @@ export interface Props {
 const PlayerCard: FunctionComponent<Props> = (props) => {
 
     const { playerId } = props
-    
-    const player = useSelector((state: RootState) => state.game.opponents[playerId])
     const dispatch = useDispatch<AppDispatch>()
+
+    const gameType = useSelector((state: RootState) => state.game.meta.gameType)
+    const player = useSelector((state: RootState) => state.game.opponents[playerId])
+
+    const statusString = getPlayerStatusString(playerId, gameType)
 
     const fetchPlayer = playerId.length > 0 && !player
 
@@ -29,8 +33,9 @@ const PlayerCard: FunctionComponent<Props> = (props) => {
             {player && player.isFetched
 
                 ? (
-                    <div>
-                        Player: {player.name}
+                    <div className={styles.container}>
+                        <p className={styles.name}>{player.name}</p>
+                        <p className={styles.status}>{statusString}</p>
                     </div>
 
                 ) : (

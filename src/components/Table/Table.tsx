@@ -3,7 +3,7 @@ import styles from './Table.module.scss'
 import ActionButton from 'components/ActionButton'
 import { useSelector } from 'react-redux'
 import { RootState } from 'store/rootReducer'
-import { getActionButtonProps } from 'games/logic'
+import { getActionButtonProps, getGameTypeEmojiCode } from 'games/logic'
 import { ICard } from 'games/types'
 import CardPile from 'components/CardPile'
 import PlayerTable from 'components/PlayerTable'
@@ -37,8 +37,6 @@ const Table: FunctionComponent<Props> = (props) => {
         setStackCards(stackGen)
     }, [stack])
 
-    console.log(show)
-
     return (
         <div className={styles.base}>
 
@@ -46,23 +44,9 @@ const Table: FunctionComponent<Props> = (props) => {
 
                 <div className={styles.topRow}>
 
-                    {seats[2] && (
-                        <div className={styles.opponentTable}>
-                            {opponents[2] && <PlayerTable orientation="d" player={players[opponents[2]]}/>}
-                        </div>
-                    )}
-
-                    {seats[3] && (
-                        <div className={styles.opponentTable}>
-                            {opponents[3] && <PlayerTable orientation="d" player={players[opponents[3]]}/>}
-                        </div>
-                    )}
-
-                    {seats[4] && (
-                        <div className={styles.opponentTable}>
-                            {opponents[4] && <PlayerTable orientation="d" player={players[opponents[4]]}/>}
-                        </div>
-                    )}
+                    {seats[2] && opponents[2] && <PlayerTable orientation="d" player={players[opponents[2]]}/>}
+                    {seats[3] && opponents[3] && <PlayerTable orientation="d" player={players[opponents[3]]}/>}
+                    {seats[4] && opponents[4] && <PlayerTable orientation="d" player={players[opponents[4]]}/>}
 
                 </div>
 
@@ -87,7 +71,7 @@ const Table: FunctionComponent<Props> = (props) => {
                     <div className={styles.center}>
 
                         <div className={styles.table}>
-                            
+                            <div className={styles.gameIcon}>{getGameTypeEmojiCode(gameType)}</div>
                         </div>
 
                         <div>
@@ -95,7 +79,7 @@ const Table: FunctionComponent<Props> = (props) => {
                         </div>
 
                         <div className={styles.playerTable}>
-
+                            <PlayerTable orientation="u" player={player}/>
                         </div>
 
                     </div>

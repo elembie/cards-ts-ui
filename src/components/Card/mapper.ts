@@ -53,9 +53,15 @@ import { ReactComponent as CKD } from './../../static/cards/KD.svg'
 import { ReactComponent as CAD } from './../../static/cards/AD.svg'
 import { ReactComponent as CardBack } from './../../static/cards/back.svg'
 
-const getCard = (suit: string, value: number) => {
+const getCard = (id: string, suit: string, value: number) => {
     
-    if (!suit || !value) { return CardBack }
+    if (id === undefined) {
+        return undefined
+    }
+
+    if (!suit || !value) { 
+        return CardBack 
+    }
 
     switch(suit.toUpperCase()) {
 

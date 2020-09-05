@@ -125,3 +125,21 @@ export const shdGetActionButtonProps = (): {show: boolean, text: string, action:
 export const shdHandleActionButton = () => {
     console.log('ACTION BUTTON')
 }
+
+export const getShdPlayerStatusString = (playerId: string) => {
+    const status = store.getState().game.state.status
+    const player = store.getState().game.state.players.find(p => p.id === playerId) as ShdPlayer
+
+    console.log(status, player)
+
+    switch(status) {
+        case ShdStatues.PREP:
+            if (!player.isReady) {
+                return 'Sorting cards...'
+            } else {
+                return 'Ready to play'
+            }
+        default:
+            return ''
+    }
+}

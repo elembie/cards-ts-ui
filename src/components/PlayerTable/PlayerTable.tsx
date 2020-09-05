@@ -21,26 +21,18 @@ const PlayerTable: FunctionComponent<Props> = (props) => {
     const { selectedCards, state: { status } } = useSelector((state: RootState) => state.game )
     const gameType = useSelector((state: RootState) => state.game.meta.gameType)
 
-    const [table, setTable] = useState<(ICard)[]>([{} as ICard, {} as ICard, {} as ICard])
-    const [hidden, setHidden] = useState<(ICard)[]>([{} as ICard, {} as ICard, {} as ICard])
-
     // TODO put into game specific Player table
     const gamePlayer = player as ShdPlayer
     const playerTable = gamePlayer?.table || []
     const playerHidden = gamePlayer?.hidden || []
 
-    useEffect(() => {
-        setTable([0,1,2].map(i => playerTable.find(c => c.order === i) || {} as ICard))
-    }, [playerTable])
-
-    useEffect(() => {
-        setHidden([0,1,2].map(i => playerHidden.find(c => c.order === i) || {} as ICard))
-    }, [playerHidden])
+    const table = [0,1,2].map(i => playerTable.find(c => c.order === i) || {} as ICard)
+    const hidden = [0,1,2].map(i => playerHidden.find(c => c.order === i) || {} as ICard)
 
     const piles = [
-        [table[0], hidden[0]],
-        [table[1], hidden[1]],
-        [table[2], hidden[2]],
+        [hidden[0], table[0]],
+        [hidden[1], table[1]],
+        [hidden[2], table[2]],
     ]
 
     if (!player) {
@@ -48,12 +40,13 @@ const PlayerTable: FunctionComponent<Props> = (props) => {
     }
 
     const handleClick = (cards: ICard[]) => {
+        console.log('Handling card pile click', cards)
         switch (status) {
             case ShdStatues.PREP:
                 if (selectedCards.length === 1 && !gamePlayer.isReady) {
                     const swap = {
                         hand: selectedCards[0],
-                        table: cards[0].id
+                        table: cards.reverse()[0].id
                     }
                     dispatch(shdSwapTable(swap))
                     dispatch(sendMessage({
@@ -69,13 +62,11 @@ const PlayerTable: FunctionComponent<Props> = (props) => {
 
     return (
         <div className={`${styles.base} ${styles[orientation]}`}>
-            <div className={styles.padding}/>
-            {piles.map(p => 
-                <div className={styles.pileContainer} key={p.map(p => p.id).join('-')}>
-                    {<CardPile cards={p} offset={3} onClick={orientation === 'u' ? handleClick : () => {}}/>}
+            {piles.map((p, i) => 
+                <div className={styles.pileContainer} key={`${i}-${p.map(c => c.id).join('-')}`}>
+                    {<CardPile cards={p} offset={3} onClick={orientation === 'u' ? () => handleClick(p) : () => {}}/>}
                 </div>
             )}
-            <div className={styles.padding}/>
         </div>
     )
 }

@@ -19,4 +19,15 @@
         display: flex;
         max-width: 100%;
     }
+
+    .overlay {
+        position: fixed;
+        bottom: 0;
+        border: 1px solid red;
+        width: 100%;
+        background-image: radial-gradient(
+            rgb(255,255,255, 0) 0%,
+            rgb(255,255,255, 0.3) 50%,
+            rgb(255,255,255, 0.9) 100%);
+    }
 }

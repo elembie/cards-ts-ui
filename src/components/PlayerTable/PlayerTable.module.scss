@@ -4,23 +4,17 @@
     height: 100%;
     width: 100%;
     display: flex;
+    justify-content: center;
 
     .pileContainer {
         margin-right: 15px;
-
         &:last-child {
             margin-right: none;
         }
     }
 
-    .padding {
-        width: 100%;
-        flex-grow: 10;
-    }
-
-
     &.u {
-
+        flex-direction: row;
     }
 
     &.d {

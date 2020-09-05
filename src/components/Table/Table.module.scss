@@ -4,14 +4,14 @@ $table-margin: 15px;
 $top-row-margin: 0.9*($table-margin + $player-table-width);
 
 .base {
-    border: 15px solid purple;
+    border: 15px solid #855E42;
+    background-color: #389c53;
     width: 98%;
     height: 100%;
     border-radius: 15%;
     border-style: ridge;
     box-sizing: border-box;
     margin: auto;
-
 
     .rows {
         display: flex;
@@ -58,8 +58,19 @@ $top-row-margin: 0.9*($table-margin + $player-table-width);
     }
 
     .table {
+
         height: 100%;
         width: 100%;
+        position: relative;
+
+        .gameIcon {
+            opacity: 0.08;
+            font-size: 96px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translateX(-50%) translateY(-50%);
+        }
     }
 
     .playerTable {

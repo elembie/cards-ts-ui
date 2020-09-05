@@ -210,6 +210,7 @@ export const gameReducer = (
             if (isShdState(state.state)) {
                 return {
                     ...state,
+                    selectedCards: [],
                     player: {
                         ...state.player,
                         hand: [
