@@ -79,7 +79,7 @@ export const shdToggleCard = (cardId: string) => {
 }
 
 export const shdGetActionButtonProps = (): {show: boolean, text: string, action: () => void} => {
-    const { state, meta, player } = store.getState().game
+    const { state, meta, player, selectedCards } = store.getState().game
 
     if (meta.tableSize === meta.playersJoined && !state.status) {
         return {
@@ -96,26 +96,47 @@ export const shdGetActionButtonProps = (): {show: boolean, text: string, action:
         return {show: false, text: '', action: () => {}}
     }
 
-    if (state.status === ShdStatues.INIT && player.isDealer) {
+    switch (state.status) {
 
-        return {
-            show: true,
-            text: 'DEAL',
-            action: () => store.dispatch(sendMessage({
-                type: ShdActions.DEAL,
-                data: {},
-            }))
-        }
+        case ShdStatues.INIT:
 
-    } else if (state.status === ShdStatues.PREP && !player.isReady) {
+            if (player.isDealer) {
+                return {
+                    show: true,
+                    text: 'DEAL',
+                    action: () => store.dispatch(sendMessage({
+                        type: ShdActions.DEAL,
+                        data: {},
+                    }))
+                }
+            }
+            break
 
-        return {
-            show: true, 
-            text: 'READY!', 
-            action: () => store.dispatch(sendMessage({
-                type: ShdActions.READY,
-                data: {}
-            }))
+        case ShdStatues.PREP:
+
+            if (!player.isReady) {
+                return {
+                    show: true, 
+                    text: 'READY!', 
+                    action: () => store.dispatch(sendMessage({
+                        type: ShdActions.READY,
+                        data: {}
+                    }))
+                }
+            }
+            break
+
+        case ShdStatues.PLAYING:
+
+        if (player.isActive && selectedCards.length > 0) {
+            return {
+                show: true, 
+                text: 'PLAY CARDS', 
+                action: () => store.dispatch(sendMessage({
+                    type: ShdActions.READY,
+                    data: {}
+                }))
+            }
         }
     }
 
@@ -133,12 +154,24 @@ export const getShdPlayerStatusString = (playerId: string) => {
     console.log(status, player)
 
     switch(status) {
+
+        case ShdStatues.INIT:
+            return 'Waiting to start...'
+
         case ShdStatues.PREP:
             if (!player.isReady) {
                 return 'Sorting cards...'
             } else {
                 return 'Ready to play'
             }
+
+        case ShdStatues.PLAYING:
+            if (player.isActive) {
+                return 'Playing...'
+            } else {
+                return 'Waiting for turn...'
+            }
+
         default:
             return ''
     }

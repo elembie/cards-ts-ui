@@ -4,7 +4,7 @@ import styles from './Hand.module.scss'
 import { useSelector } from 'react-redux';
 import { RootState } from 'store/rootReducer';
 import Card from 'components/Card';
-import { selectCard } from 'games/logic';
+import { selectCard, getPlayerStatusString } from 'games/logic';
 
 interface Props {
     cards: ICard[]
@@ -13,6 +13,8 @@ interface Props {
 const Hand: FunctionComponent<Props> = (props) => {
 
     const { player, meta: { gameType } } = useSelector((state: RootState) => state.game)
+    const playerName = useSelector((state: RootState) => state.session.user.name) || ''
+    const statusString = getPlayerStatusString(player.id, gameType)
 
     const hand = typeof player.hand === 'number' || player.hand === undefined 
         ? [] 
@@ -39,7 +41,8 @@ const Hand: FunctionComponent<Props> = (props) => {
                 </div>
             </div>
             <div className={styles.overlay}>
-                Hi
+                <span className={styles.name}>{playerName}</span>
+                {statusString.length > 0 && <span className={styles.status}>&nbsp;{`| ${statusString}`}</span>}
             </div>
         </div>
     )

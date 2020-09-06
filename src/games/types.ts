@@ -10,6 +10,7 @@ export interface ICard {
 
 export interface IPlayer {
     id: string,
+    isActive: boolean,
     hand: ICard[] | number
 }
 

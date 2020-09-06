@@ -13,6 +13,8 @@ interface Props {
     opponents: (string | undefined)[]
 }
 
+const blankCard = {} as ICard
+
 const Table: FunctionComponent<Props> = (props) => {
 
     const { seats, opponents } = props
@@ -32,7 +34,7 @@ const Table: FunctionComponent<Props> = (props) => {
         const stackGen: ICard[] = []
         const max = stack > 10 ? 10 : stack
         for (var i=0; i<max; i++) {
-            stackGen.push({} as ICard)
+            stackGen.push({...blankCard, id: 'BACK'})
         }
         setStackCards(stackGen)
     }, [stack])
@@ -44,9 +46,23 @@ const Table: FunctionComponent<Props> = (props) => {
 
                 <div className={styles.topRow}>
 
-                    {seats[2] && opponents[2] && <PlayerTable orientation="d" player={players[opponents[2]]}/>}
-                    {seats[3] && opponents[3] && <PlayerTable orientation="d" player={players[opponents[3]]}/>}
-                    {seats[4] && opponents[4] && <PlayerTable orientation="d" player={players[opponents[4]]}/>}
+                    {seats[2] && (
+                        <div className={styles.opponentTable}>
+                            {opponents[2] && <PlayerTable orientation="d" player={players[opponents[2]]}/>}
+                        </div>
+                    )}
+
+                    {seats[3] && (
+                        <div className={styles.opponentTable}>
+                            {opponents[3] && <PlayerTable orientation="d" player={players[opponents[3]]}/>}
+                        </div>
+                    )}
+
+                    {seats[4] && (
+                        <div className={styles.opponentTable}>
+                            {opponents[4] && <PlayerTable orientation="d" player={players[opponents[4]]}/>}
+                        </div>
+                    )}
 
                 </div>
 
@@ -71,6 +87,12 @@ const Table: FunctionComponent<Props> = (props) => {
                     <div className={styles.center}>
 
                         <div className={styles.table}>
+                            <div className={styles.stack}>
+                                {stack > 0 && <CardPile cards={stackCards} offset={3}/>}
+                            </div>
+                            <div className={styles.played}>
+                                Played cards
+                            </div>
                             <div className={styles.gameIcon}>{getGameTypeEmojiCode(gameType)}</div>
                         </div>
 

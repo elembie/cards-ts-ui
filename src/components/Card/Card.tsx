@@ -8,7 +8,7 @@ import { RootState } from 'store/rootReducer'
 interface Props {
     card: ICard,
     style?: object,
-    location: 'hand' | 'table' | 'played'
+    location: 'hand' | 'table' | 'played' | 'mini'
     onClick?: (cardId: string) => void
 }
 

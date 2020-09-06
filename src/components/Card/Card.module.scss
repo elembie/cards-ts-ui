@@ -34,5 +34,17 @@
             height: 100%;
         } 
     }
+
+    &.mini {
+        height: 100%;
+        max-width: 45px;
+        width: 100px;
+        border: 1px solid grey;
+
+        & svg {
+            height: 100%;
+        } 
+
+    }
     
 }
