@@ -24,7 +24,7 @@ const PlayerCard: FunctionComponent<Props> = (props) => {
     const gameType = useSelector((state: RootState) => state.game.meta.gameType)
     const opponent = useSelector((state: RootState) => state.game.opponents[playerId])
     const player = useSelector((state: RootState) => state.game.players[playerId])
-    const statusString = getPlayerStatusString(playerId, gameType)
+    const statusString = playerId ? getPlayerStatusString(playerId, gameType) : ''
 
     const fetchPlayer = playerId.length > 0 && !opponent
 
@@ -36,9 +36,9 @@ const PlayerCard: FunctionComponent<Props> = (props) => {
 
     const shdPlayer = player as ShdPlayer
 
-    const handLength = typeof(shdPlayer.hand) === 'number'
-        ? shdPlayer.hand
-        : shdPlayer.hand.length
+    const handLength = typeof(shdPlayer?.hand) === 'number'
+        ? shdPlayer?.hand || 0
+        : shdPlayer?.hand.length || 0
 
     const cardsToShow = handLength > 3 ? 3 : handLength
     const handMap: number[] = []
@@ -58,7 +58,7 @@ const PlayerCard: FunctionComponent<Props> = (props) => {
     }
 
     return (
-        <div className={`${styles.base} ${player.isActive ? styles.active : ''}`}>
+        <div className={`${styles.base} ${player && player.isActive ? styles.active : ''}`}>
             {opponent && opponent.isFetched
 
                 ? (

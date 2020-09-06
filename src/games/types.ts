@@ -6,6 +6,9 @@ export interface ICard {
     rank: number,
     suit: 'C' | 'D' | 'H' | 'S'
     value: number
+    rotation: number,
+    xOffset: number,
+    yOffset: number,
 }
 
 export interface IPlayer {

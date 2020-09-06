@@ -13,7 +13,7 @@ import {
 import store from '../../store'
 import { clearSelectedCards, selectCards, unselectCards, sendMessage } from '../../store/game/actions'
 import { GameTypes } from '../../store/game/types'
-
+import { ICard } from 'games/types'
 
 export const mapShdApiCard = (card: ApiShdCard): ShdCard => {
     return {
@@ -25,6 +25,9 @@ export const mapShdApiCard = (card: ApiShdCard): ShdCard => {
         suit: card.suit,
         value: card.value,
         order: card.order,
+        rotation: card.rotation,
+        xOffset: card.x_offset,
+        yOffset: card.y_offset,
     }
 }
 
@@ -43,7 +46,8 @@ export const mapShdApiPlayer = (player: ApiShdPlayer): ShdPlayer => {
         hand: typeof player.hand == 'number' ? player.hand : player.hand?.map(c => mapShdApiCard(c)),
         table: player.table.map(c => mapShdApiCard(c)),
         hidden: player.hidden.map(c => mapShdApiCard(c)),
-        order: player.order
+        order: player.order,
+
     }
 }
 
@@ -53,7 +57,7 @@ export const mapShdApiState = (state: ApiShdState): ShdState => {
         dead: state.dead,
         stack: state.stack,
         status: state.status,
-        table: state.table,
+        table: state.table.map(c => mapShdApiCard(c)),
         players: state.players.map(p => mapShdApiPlayer(p)),
         currentValue: state.current_value,
         totalPlayers: state.total_players,
@@ -62,26 +66,52 @@ export const mapShdApiState = (state: ApiShdState): ShdState => {
 
 export const shdToggleCard = (cardId: string) => {
     const { player, selectedCards, state: { status } } = store.getState().game
-    const shdPlayer = player as ShdPlayer
     const isSelected = selectedCards.indexOf(cardId) >= 0
+
+    const { hand } = player
+    const playerHand: ICard[] = typeof(hand) !== 'number' 
+        ? hand
+        : []
+
+    const selected = playerHand.filter(c => selectedCards.includes(c.id))
+    const currentValue = selected.length > 0 ? selected[0].value : -1
+
+    const card = playerHand.find(c => c.id === cardId)
+
+    if (!card)  { return }
 
     if (isSelected) {
         store.dispatch(unselectCards([cardId]))
         return
     }
 
-    if (status === ShdStatues.PREP || status === ShdStatues.PLAYING) {
+    if (status === ShdStatues.PREP) {
+
         if (selectedCards.length > 0) {
             store.dispatch(clearSelectedCards())
         }
         store.dispatch(selectCards([cardId]))
+
+    } else if (status === ShdStatues.PLAYING) {
+
+        if (selectedCards.length === 0) {
+            store.dispatch(selectCards([cardId]))
+
+        } else if (card.value === currentValue) {
+            store.dispatch(selectCards([cardId]))
+        } else {
+            store.dispatch(clearSelectedCards())
+            store.dispatch(selectCards([cardId]))
+        }
+
     }
 }
 
 export const shdGetActionButtonProps = (): {show: boolean, text: string, action: () => void} => {
     const { state, meta, player, selectedCards } = store.getState().game
+    const userId = store.getState().session.user.id
 
-    if (meta.tableSize === meta.playersJoined && !state.status) {
+    if (meta.tableSize === meta.playersJoined && !state.status && meta.createdBy === userId) {
         return {
             show: true,
             text: 'DEAL',
@@ -150,8 +180,12 @@ export const shdHandleActionButton = () => {
 }
 
 export const getShdPlayerStatusString = (playerId: string) => {
-    const status = store.getState().game.state.status
-    const player = store.getState().game.state.players.find(p => p.id === playerId) as ShdPlayer
+    const status = store.getState().game?.state?.status || ''
+    const player = store.getState().game?.state?.players?.find(p => p.id === playerId) as ShdPlayer
+
+    if (player === undefined) {
+        return ''
+    }
 
     console.log(status, player)
 

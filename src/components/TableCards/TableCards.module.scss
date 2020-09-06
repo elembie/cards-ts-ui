@@ -1,9 +1,12 @@
 .base {
     width: 80px;
     height: 100px;
+    position: relative;
 
     .card {
         width: 80px;
         height: 100px;
+        position: absolute;
+        z-index: 100;
     }
 }

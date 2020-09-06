@@ -10,11 +10,21 @@ interface Props {
 const TableCards: FunctionComponent<Props> = (props) => {
     
     const { cards } = props
+
+    if (cards === undefined) {
+        return null
+    }
+
+    const transforms: string[] = cards.map(c => `rotate(${c.rotation}deg) translate(${c.xOffset}px, ${c.yOffset}px)`)
+    console.log(transforms)
     
     return (
         <div className={styles.base}>
-            {cards.map(c => (
-                <div>
+            {cards.map((c, i) => (
+                <div 
+                    className={styles.card} 
+                    style={{transform: transforms[i]}
+                }>
                     <Card card={c} location="table"/>
                 </div>
             ))}

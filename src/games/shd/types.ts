@@ -6,6 +6,9 @@ export interface ShdCard extends ICard {
     isHidden: boolean,
     order: number,
     playedBy: string,
+    rotation: number,
+    xOffset: number,
+    yOffset: number,
 }
 
 export interface ApiShdCard extends ICard {
@@ -13,6 +16,10 @@ export interface ApiShdCard extends ICard {
     is_hidden: boolean,
     order: number,
     played_by: string,
+    sh_count: number,
+    rotation: number,
+    x_offset: number,
+    y_offset: number,
 }
 
 export interface ShdPlayer extends IPlayer {
@@ -58,7 +65,7 @@ export interface ApiShdState extends IState {
     current_value: number,
     dead: number,
     players: ApiShdPlayer[]
-    table: ShdCard[]
+    table: ApiShdCard[]
     total_players: number
 }
 
