@@ -31,6 +31,12 @@
         align-items: center;
         justify-content: center;
         font-size: 18px;
+
+        &.active {
+            -webkit-box-shadow: 0px -12px 21px 0px rgba(113,63,212,0.45);
+            -moz-box-shadow: 0px -12px 21px 0px rgba(113,63,212,0.45);
+            box-shadow: 0px -12px 21px 0px rgba(113,63,212,0.45);
+        }
     }
 
     .name {

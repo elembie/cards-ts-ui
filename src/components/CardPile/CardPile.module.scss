@@ -1,4 +1,12 @@
 .base {
     height: 100%;
+    width: 90px;
     display: flex;
+    position: relative;
+
+    .card {
+        position: absolute;
+        top: 0;
+        height: 100%;
+    }
 }

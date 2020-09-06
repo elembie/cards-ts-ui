@@ -7,6 +7,7 @@ import { getActionButtonProps, getGameTypeEmojiCode } from 'games/logic'
 import { ICard } from 'games/types'
 import CardPile from 'components/CardPile'
 import PlayerTable from 'components/PlayerTable'
+import TableCards from 'components/TableCards'
 
 interface Props {
     seats : boolean[],
@@ -21,7 +22,7 @@ const Table: FunctionComponent<Props> = (props) => {
 
     const { 
         meta: { gameType }, 
-        state: { stack },
+        state: { stack, table },
          players, 
          player
     } = useSelector((state: RootState) => state.game)
@@ -34,7 +35,7 @@ const Table: FunctionComponent<Props> = (props) => {
         const stackGen: ICard[] = []
         const max = stack > 10 ? 10 : stack
         for (var i=0; i<max; i++) {
-            stackGen.push({...blankCard, id: 'BACK'})
+            stackGen.push({...blankCard, id: `${i}-BACK`})
         }
         setStackCards(stackGen)
     }, [stack])
@@ -91,7 +92,7 @@ const Table: FunctionComponent<Props> = (props) => {
                                 {stack > 0 && <CardPile cards={stackCards} offset={3}/>}
                             </div>
                             <div className={styles.played}>
-                                Played cards
+                                <TableCards cards={table} />
                             </div>
                             <div className={styles.gameIcon}>{getGameTypeEmojiCode(gameType)}</div>
                         </div>

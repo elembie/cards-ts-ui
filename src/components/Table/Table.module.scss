@@ -61,7 +61,6 @@ $top-row-margin: 0.9*($table-margin + $player-table-width);
 
         height: 100%;
         width: 100%;
-        position: relative;
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -107,8 +106,12 @@ $top-row-margin: 0.9*($table-margin + $player-table-width);
     }
 
     .stack {
+        height: 100%;
         width: 100%;
-        margin-left: auto;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        margin-right: 70px;
     }
 
 }

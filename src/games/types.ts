@@ -19,6 +19,7 @@ export interface IState {
     players: IPlayer[],
     status: string,
     stack: number,
+    table: ICard[],
 }
 
 export type StateTypes = IState | ShdState

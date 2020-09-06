@@ -22,9 +22,7 @@ const Hand: FunctionComponent<Props> = (props) => {
 
     const width = 0.6 * 200 * hand.length
 
-    const handleClick = (cardId: string) => {
-        selectCard(cardId, gameType)
-    }
+    console.log('player', player)
 
     return (
         <div className={styles.base}>
@@ -34,15 +32,18 @@ const Hand: FunctionComponent<Props> = (props) => {
                         const offset = -i * 200 + i * 60 - 100
                         return (
                             <div style={{transform: `translateX(${offset}px)`}} key={c.id}>
-                                <Card card={c} location='hand' onClick={handleClick} />
+                                <Card card={c} location='hand' onClick={() => selectCard(c.id, gameType)} />
                             </div>
                         )
                     })}
                 </div>
             </div>
-            <div className={styles.overlay}>
-                <span className={styles.name}>{playerName}</span>
-                {statusString.length > 0 && <span className={styles.status}>&nbsp;{`| ${statusString}`}</span>}
+            <div className={`${styles.overlay} ${player.isActive ? styles.active : ''}`}>
+                <div>
+                    <span className={styles.name}>{playerName}</span>
+                    {statusString.length > 0 && <span className={styles.status}>&nbsp;{`| ${statusString}`}</span>}
+                </div>
+                
             </div>
         </div>
     )

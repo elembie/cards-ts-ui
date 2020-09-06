@@ -30,6 +30,7 @@ const initialState: types.GameState = {
     state: {
         gameType: types.GameTypes.Shithead,
         players: [],
+        table: [],
         status: 'none',
         stack: 0,
     },

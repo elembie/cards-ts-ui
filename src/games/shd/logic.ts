@@ -70,7 +70,7 @@ export const shdToggleCard = (cardId: string) => {
         return
     }
 
-    if (status === ShdStatues.PREP) {
+    if (status === ShdStatues.PREP || status === ShdStatues.PLAYING) {
         if (selectedCards.length > 0) {
             store.dispatch(clearSelectedCards())
         }
@@ -128,16 +128,18 @@ export const shdGetActionButtonProps = (): {show: boolean, text: string, action:
 
         case ShdStatues.PLAYING:
 
-        if (player.isActive && selectedCards.length > 0) {
-            return {
-                show: true, 
-                text: 'PLAY CARDS', 
-                action: () => store.dispatch(sendMessage({
-                    type: ShdActions.READY,
-                    data: {}
-                }))
+            if (player.isActive && selectedCards.length > 0) {
+                return {
+                    show: true, 
+                    text: 'PLAY CARDS', 
+                    action: () => store.dispatch(sendMessage({
+                        type: ShdActions.PLAY,
+                        data: {
+                            cardIds: selectedCards,
+                        }
+                    }))
+                }
             }
-        }
     }
 
     return {show: false, text: '', action: () => {}}
