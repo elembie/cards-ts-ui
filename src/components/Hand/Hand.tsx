@@ -20,7 +20,8 @@ const Hand: FunctionComponent<Props> = (props) => {
         ? [] 
         : player.hand.sort((a, b) => a.value - b.value)
 
-    const width = 0.6 * 200 * hand.length
+    const width = 800
+    const overlap = (hand.length * 80 - width)/hand.length
 
     console.log('player', player)
 
@@ -29,9 +30,9 @@ const Hand: FunctionComponent<Props> = (props) => {
             <div className={styles.hand}>
                 <div className={styles.cards} style={{width: `${width}px`}}>
                     { hand.map((c, i) => {
-                        const offset = -i * 200 + i * 60 - 100
+                        const offset = -i * 80 + i * overlap
                         return (
-                            <div style={{transform: `translateX(${offset}px)`}} key={c.id}>
+                            <div style={{transform: `translateX(${offset}px)`, height: '100px'}} key={c.id}>
                                 <Card card={c} location='hand' onClick={() => selectCard(c.id, gameType)} />
                             </div>
                         )

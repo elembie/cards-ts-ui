@@ -158,7 +158,33 @@ export const shdGetActionButtonProps = (): {show: boolean, text: string, action:
 
         case ShdStatues.PLAYING:
 
-            if (player.isActive && selectedCards.length > 0) {
+            if (!player.isActive) {
+                break
+            }
+
+            if (player.canBurn) {
+
+                return {
+                    show: true,
+                    text: 'BURN PILE',
+                    action: () => store.dispatch(sendMessage({
+                        type: ShdActions.BURN,
+                        data: {},
+                    }))
+                }
+
+            } else if (!player.canPlay) {
+
+                return {
+                    show: true,
+                    text: 'PICK UP :(',
+                    action: () => store.dispatch(sendMessage({
+                        type: ShdActions.PICKUP,
+                        data: {},
+                    }))
+                }
+
+            } else if (selectedCards.length > 0) {
                 return {
                     show: true, 
                     text: 'PLAY CARDS', 

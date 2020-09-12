@@ -79,7 +79,9 @@ export enum ShdActions {
     DEAL = 'DEAL',
     SWAP = 'SWAP',
     READY = 'READY',
-    PLAY = 'PLAY'
+    PLAY = 'PLAY',
+    BURN = 'BURN',
+    PICKUP = 'PICKUP',
 }
 
 export const isShdState = (anyState: IState ): anyState is ShdState => {

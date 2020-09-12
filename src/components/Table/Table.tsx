@@ -97,7 +97,7 @@ const Table: FunctionComponent<Props> = (props) => {
                             <div className={styles.gameIcon}>{getGameTypeEmojiCode(gameType)}</div>
                         </div>
 
-                        <div>
+                        <div className={styles.actionButton}>
                             {show && <ActionButton text={text} onClick={action}/>}
                         </div>
 
