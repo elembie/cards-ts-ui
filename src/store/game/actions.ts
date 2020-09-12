@@ -204,7 +204,6 @@ export const connectSocket = (): AppThunk => {
 
             socket.onopen = () => {
                 dispatch(connectedSocket(socket))
-                socket.send(JSON.stringify({game: 'SHD', type: 'start_game', data: 'test', gameId: '53bcca68-221b-4a41-b9d3-af1b8a79444c'}))
             }
 
             socket.onmessage = (e) => {

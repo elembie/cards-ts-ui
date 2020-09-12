@@ -8,6 +8,7 @@ import { ICard } from 'games/types'
 import CardPile from 'components/CardPile'
 import PlayerTable from 'components/PlayerTable'
 import TableCards from 'components/TableCards'
+import TableHistory from 'components/TableHistory/TableHistory'
 
 interface Props {
     seats : boolean[],
@@ -93,6 +94,7 @@ const Table: FunctionComponent<Props> = (props) => {
                             </div>
                             <div className={styles.played}>
                                 <TableCards cards={table} />
+                                <TableHistory cards={table} />
                             </div>
                             <div className={styles.gameIcon}>{getGameTypeEmojiCode(gameType)}</div>
                         </div>

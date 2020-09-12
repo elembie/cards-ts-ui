@@ -68,40 +68,79 @@ export const shdToggleCard = (cardId: string) => {
     const { player, selectedCards, state: { status } } = store.getState().game
     const isSelected = selectedCards.indexOf(cardId) >= 0
 
-    const { hand } = player
-    const playerHand: ICard[] = typeof(hand) !== 'number' 
-        ? hand
-        : []
-
-    const selected = playerHand.filter(c => selectedCards.includes(c.id))
-    const currentValue = selected.length > 0 ? selected[0].value : -1
-
-    const card = playerHand.find(c => c.id === cardId)
-
-    if (!card)  { return }
-
     if (isSelected) {
         store.dispatch(unselectCards([cardId]))
         return
     }
 
-    if (status === ShdStatues.PREP) {
+    const { hand } = player
+    const playerHand: ICard[] = typeof(hand) !== 'number' 
+        ? hand
+        : []
 
-        if (selectedCards.length > 0) {
-            store.dispatch(clearSelectedCards())
-        }
-        store.dispatch(selectCards([cardId]))
 
-    } else if (status === ShdStatues.PLAYING) {
+    if (status === ShdStatues.PLAYING && playerHand.length === 0) {
 
-        if (selectedCards.length === 0) {
-            store.dispatch(selectCards([cardId]))
+        const shdPlayer = player as ShdPlayer
 
-        } else if (card.value === currentValue) {
-            store.dispatch(selectCards([cardId]))
+        if (shdPlayer.table.length > 0) {
+
+            const card = shdPlayer.table.find(c => c.id === cardId)
+            const selected = shdPlayer.table.filter(c => selectedCards.includes(c.id))
+            const currentValue = selected.length > 0 ? selected[0].value : -1
+
+            if (!card)  { return }
+
+            if (selectedCards.length === 0) {
+                store.dispatch(selectCards([cardId]))
+            } else if (card.value === currentValue) {
+                store.dispatch(selectCards([cardId]))
+            } else {
+                store.dispatch(clearSelectedCards())
+                store.dispatch(selectCards([cardId]))
+            }
+
         } else {
-            store.dispatch(clearSelectedCards())
+
+            const card = shdPlayer.hidden.find(c => c.id === cardId)
+            if (!card)  { return }
+
+            if (selectedCards.length > 0) {
+                store.dispatch(clearSelectedCards())
+            }
+
             store.dispatch(selectCards([cardId]))
+
+        }
+
+    } else {
+
+        const selected = playerHand.filter(c => selectedCards.includes(c.id))
+        const currentValue = selected.length > 0 ? selected[0].value : -1
+
+        const card = playerHand.find(c => c.id === cardId)
+
+        if (!card)  { return }
+
+        if (status === ShdStatues.PREP) {
+
+            if (selectedCards.length > 0) {
+                store.dispatch(clearSelectedCards())
+            }
+            store.dispatch(selectCards([cardId]))
+
+        } else if (status === ShdStatues.PLAYING) {
+
+            if (selectedCards.length === 0) {
+                store.dispatch(selectCards([cardId]))
+
+            } else if (card.value === currentValue) {
+                store.dispatch(selectCards([cardId]))
+            } else {
+                store.dispatch(clearSelectedCards())
+                store.dispatch(selectCards([cardId]))
+            }
+
         }
 
     }
@@ -188,12 +227,15 @@ export const shdGetActionButtonProps = (): {show: boolean, text: string, action:
                 return {
                     show: true, 
                     text: 'PLAY CARDS', 
-                    action: () => store.dispatch(sendMessage({
-                        type: ShdActions.PLAY,
-                        data: {
-                            cardIds: selectedCards,
-                        }
-                    }))
+                    action: () => {
+                        store.dispatch(sendMessage({
+                            type: ShdActions.PLAY,
+                            data: {
+                                cardIds: selectedCards,
+                            }
+                        }))
+                        store.dispatch(clearSelectedCards())
+                    }
                 }
             }
     }
@@ -212,8 +254,6 @@ export const getShdPlayerStatusString = (playerId: string) => {
     if (player === undefined) {
         return ''
     }
-
-    console.log(status, player)
 
     switch(status) {
 

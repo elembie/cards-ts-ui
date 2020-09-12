@@ -16,7 +16,6 @@ const TableCards: FunctionComponent<Props> = (props) => {
     }
 
     const transforms: string[] = cards.map(c => `rotate(${c.rotation}deg) translate(${c.xOffset}px, ${c.yOffset}px)`)
-    console.log(transforms)
     
     return (
         <div className={styles.base}>

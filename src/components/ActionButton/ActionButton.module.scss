@@ -2,11 +2,13 @@
     width: 150px;
     height: 30px;
     margin: 0 auto;
-    position: relative;
-    border: grey;
+    border: 1px solid grey;
     background-color: lightgrey;
-    text-align: center;
     cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
     -moz-user-select: none;
     -webkit-user-select: none;

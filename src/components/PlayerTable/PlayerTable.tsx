@@ -6,7 +6,8 @@ import { ShdPlayer, ShdStatues, ShdActions } from 'games/shd/types';
 import CardPile from 'components/CardPile';
 import { ICard, IPlayer } from 'games/types';
 import { AppDispatch } from 'store';
-import { sendMessage, shdSwapTable } from 'store/game/actions';
+import { sendMessage, shdSwapTable, selectCards } from 'store/game/actions';
+import { selectCard } from 'games/logic';
 
 interface Props {
     orientation: 'u' | 'd' | 'l' | 'r',
@@ -25,6 +26,7 @@ const PlayerTable: FunctionComponent<Props> = (props) => {
     const gamePlayer = player as ShdPlayer
     const playerTable = gamePlayer?.table || []
     const playerHidden = gamePlayer?.hidden || []
+    const playerHand = typeof(gamePlayer?.hand) === 'number' ? [] : gamePlayer?.hand || []
 
     const table = [0,1,2].map(i => playerTable.find(c => c.order === i) || {} as ICard)
     const hidden = [0,1,2].map(i => playerHidden.find(c => c.order === i) || {} as ICard)
@@ -53,6 +55,15 @@ const PlayerTable: FunctionComponent<Props> = (props) => {
                         type: ShdActions.SWAP,
                         data: swap,
                     }))
+                }
+                break
+            case ShdStatues.PLAYING:
+                if (playerHand.length === 0) {
+                    if (playerTable.length === 0 && playerHidden.length !== 0) {
+                        selectCard(cards[0].id, gameType)
+                    } else {
+                        selectCard(cards.reverse()[0].id, gameType)
+                    }
                 }
                 break
             default:
