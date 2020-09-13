@@ -8,7 +8,7 @@ export const amplifyConfig = {
         userPoolWebClientId: '7s15kdmtc3rp33tct70en9u7d0',
         cookieStorage: {
         // REQUIRED - Cookie domain (only required if cookieStorage is provided)
-            domain: 'localhost',
+            domain: 'dx1siihwrx6bg.cloudfront.net',
         // OPTIONAL - Cookie path
             path: '/',
         // OPTIONAL - Cookie expiration in days
@@ -33,7 +33,7 @@ export const amplifyConfig = {
 
 export const oauth = {
     domain: 'zrrkyjey2k.auth.ap-southeast-2.amazoncognito.com',
-    scope: ['phone', 'email', 'profile', 'openid', 'aws.cognito.signin.user.admin'],
+    scope: ['phone', 'email', 'profile', 'openid',],
     redirectSignIn: 'https://dx1siihwrx6bg.cloudfront.net/',
     redirectSignOut: 'https://dx1siihwrx6bg.cloudfront.net/',
     responseType: 'code'
