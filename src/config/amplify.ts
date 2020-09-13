@@ -34,7 +34,7 @@ export const amplifyConfig = {
 export const oauth = {
     domain: 'zrrkyjey2k.auth.ap-southeast-2.amazoncognito.com',
     scope: ['phone', 'email', 'profile', 'openid', 'aws.cognito.signin.user.admin'],
-    redirectSignIn: 'http://localhost:3000/',
-    redirectSignOut: 'http://localhost:3000/',
+    redirectSignIn: 'https://dx1siihwrx6bg.cloudfront.net/',
+    redirectSignOut: 'https://dx1siihwrx6bg.cloudfront.net/',
     responseType: 'code'
 }
